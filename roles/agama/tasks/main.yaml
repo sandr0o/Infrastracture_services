@@ -1,0 +1,15 @@
+- name: Create directory /opt/agama if it does not exist
+  ansible.builtin.file:
+    path: /opt/agama
+    state: directory
+    owner: agama
+
+- name: Install dependencies
+  apt:
+    name: python3-flask-sqlalchemy
+    update_cache: yes
+
+- name: Install agama application 
+  get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    dest: /opt/agama/

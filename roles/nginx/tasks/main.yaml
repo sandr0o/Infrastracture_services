@@ -4,3 +4,16 @@
     name: nginx
     state: latest
     update_cache: yes
+
+- name: Replace vm /etc/nginx/sites-enabled/default with nginx configuration as uWSGI frontend
+  ansible.builtin.copy:
+    src: default
+    dest: /etc/nginx/sites-enabled/
+
+- name: Ensure service is started unconditionally
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+  notify:
+  - Restart nginx

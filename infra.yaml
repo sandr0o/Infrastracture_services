@@ -4,6 +4,17 @@
   become: yes
   roles: 
     - users
+    - agama
+    - uwsgi
     - nginx
 
-      
+  handlers:
+    - name: Restart uwsgi
+      ansible.builtin.service:
+        name: uwsgi
+        state: restarted
+
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted

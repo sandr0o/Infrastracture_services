@@ -16,3 +16,6 @@
     state: present
     key: https://github.com/romankuchin.keys
 
+- name: Add user 'agama'
+  ansible.builtin.user:
+    name: agama

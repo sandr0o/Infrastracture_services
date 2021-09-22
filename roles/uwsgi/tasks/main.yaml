@@ -1,0 +1,27 @@
+- name: Install uwsgi & uwsgi-plugin-python3
+  apt:
+    pkg:
+    - uwsgi
+    - uwsgi-plugin-python3
+    update_cache: yes
+
+- name: Create uwsgi directory in vm
+  ansible.builtin.file:
+    path: /etc/uwsgi/apps-enabled/
+    state: directory
+
+- name: Copy agama.ini to vm directory
+  ansible.builtin.copy:
+    src: agama.ini
+    dest: /etc/uwsgi/apps-enabled/
+
+- name: Ensure service is started unconditionally
+  ansible.builtin.service:
+    name: uwsgi
+    state: started
+    enabled: yes
+  notify:
+  - Restart uwsgi
+
+ 
+  
