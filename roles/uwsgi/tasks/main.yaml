@@ -9,19 +9,23 @@
   ansible.builtin.file:
     path: /etc/uwsgi/apps-enabled/
     state: directory
+    owner: agama
 
 - name: Copy agama.ini to vm directory
   ansible.builtin.copy:
     src: agama.ini
     dest: /etc/uwsgi/apps-enabled/
+    owner: agama
+  notify: 
+  - Restart uwsgi    
 
-- name: Ensure service is started unconditionally
+- name: Ensure uwsgi service is started unconditionally
   ansible.builtin.service:
     name: uwsgi
     state: started
     enabled: yes
-  notify:
-  - Restart uwsgi
-
- 
   
+  
+  
+
+
