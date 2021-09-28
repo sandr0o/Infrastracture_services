@@ -3,7 +3,12 @@
     pkg:
     - uwsgi
     - uwsgi-plugin-python3
-    update_cache: yes
+
+- name: Install python3-pymysql on app server
+  ansible.builtin.apt:
+    name: 
+      - python3-flask-sqlalchemy
+      - python3-pymysql
 
 - name: Create uwsgi directory in vm
   ansible.builtin.file:
@@ -12,10 +17,11 @@
     owner: agama
 
 - name: Copy agama.ini to vm directory
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: agama.ini
     dest: /etc/uwsgi/apps-enabled/
     owner: agama
+    mode: '0644'
   notify: 
   - Restart uwsgi    
 

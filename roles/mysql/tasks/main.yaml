@@ -1,0 +1,42 @@
+- name: Install mysql-server
+  apt:
+    name: mysql-server
+    state: latest
+
+- name: Install PyMySQL
+  apt:
+    name: python3-pymysql
+    state: latest   
+
+- name: Replace vm /etc/mysql/mysql.conf.d/mysqld.cnf with override.cnf
+  ansible.builtin.copy:
+    src: override.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    mode: '0644'
+  notify: 
+  - Restart mysql
+
+- name: Ensure mysql-server is started automatically and enabled on system boot
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: MySQL database
+  community.mysql.mysql_db:
+    name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: MySQL user
+  community.mysql.mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    host: "%" 
+    priv: "{{ mysql_database }}.*:ALL"
+    state: present
+    
+    
+    
+    
+    

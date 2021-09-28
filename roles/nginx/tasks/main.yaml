@@ -1,8 +1,7 @@
 - name: Install nginx
   apt: 
     name: nginx
-    state: latest
-    update_cache: yes  
+    state: latest 
 
 - name: Replace vm /etc/nginx/sites-enabled/default with nginx configuration as uWSGI frontend
   ansible.builtin.copy:
