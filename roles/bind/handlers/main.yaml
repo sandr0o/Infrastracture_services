@@ -1,0 +1,9 @@
+- name: Restart bind9
+  ansible.builtin.service:
+    name: bind9
+    state: restarted
+
+- name: Reload Remote Name Daemon Control
+  ansible.builtin.command:
+    cmd: rndc reload
+  failed_when: no

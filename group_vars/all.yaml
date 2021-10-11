@@ -1,4 +1,4 @@
-mysql_host: 192.168.42.130
+mysql_host: sandr0o-2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -8,3 +8,23 @@ mysql_password: !vault |
           33313362613963623434636162306335303433616435633434336334363636666431666336663762
           3966663936616430310a663334633534363233303337623630643463383666353762386465653031
           6239
+
+forwarders:
+  - 1.1.1.1;
+  - 8.8.8.8;
+  - 9.9.9.9;
+  - 9.9.9.10;
+
+allowed:
+  - 192.168.42.0/24;
+  - 127.0.0.0/8;
+
+startup: luntik.sc
+
+nameserver: 192.168.42.139
+
+vmIP:
+  - 192.168.42.104
+  - 192.168.42.139
+
+domainName: luntik.sc

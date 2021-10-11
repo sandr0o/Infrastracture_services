@@ -1,0 +1,26 @@
+acl trustedclients { {% for n in allowed%} 
+                     {{ n }}  
+                     {% endfor %}
+            };
+
+options {
+  directory "/var/cache/bind";
+  
+  recursion yes;
+  allow-query { trustedclients; };
+  allow-query-cache { trustedclients; };
+  allow-recursion { trustedclients; };
+
+  forwarders {
+          {% for n in forwarders %}
+          {{ n }}
+          {% endfor %}
+  };
+  dnssec-validation no;
+
+  listen-on port 53 { {% for n in allowed%} 
+                     {{ n }}  
+                     {% endfor %} 
+            };
+
+};
