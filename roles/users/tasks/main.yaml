@@ -1,20 +1,24 @@
-- name: Add the user 'juri' with 2048-bit SSH key
-  ansible.builtin.user:
-    name: hudolejev
-- name: Set authorized key without validating the TLS/SSL certificates
-  ansible.posix.authorized_key:
-    user: hudolejev
-    state: present
-    key: https://github.com/hudolejev.keys
-
-- name: Add the user 'roman' with 2048-bit SSH key
-  ansible.builtin.user:
-    name: romankuchin
-- name: Set authorized key without validating the TLS/SSL certificates
-  ansible.posix.authorized_key:
-    user: romankuchin
-    state: present
-    key: https://github.com/romankuchin.keys
+#- name: Add the user 'juri' with 2048-bit SSH key
+#  ansible.builtin.user:
+#    name: hudolejev
+#- name: Set authorized key without validating the TLS/SSL certificates
+#  ansible.posix.authorized_key:
+#    user: hudolejev
+#    state: present
+#    key: https://github.com/hudolejev.keys
+#    exclusive: yes
+#    validate_certs: no
+#
+#- name: Add the user 'roman' with 2048-bit SSH key
+#  ansible.builtin.user:
+#    name: romankuchin
+#- name: Set authorized key without validating the TLS/SSL certificates
+#  ansible.posix.authorized_key:
+#    user: romankuchin
+#    state: present
+#    key: https://github.com/romankuchin.keys
+#    exclusive: yes
+#    validate_certs: no
 
 - name: Add user 'agama'
   ansible.builtin.user:

@@ -1,0 +1,17 @@
+- name: Install prometheus
+  apt: 
+    name: prometheus
+    
+- name: Insert template into vm 
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+  notify:
+    - Restart prometheus
+
+- name: Replace prometheus default file with our changed default
+  ansible.builtin.template:
+      src: default.j2
+      dest: /etc/default/prometheus
+  notify:
+    - Restart prometheus

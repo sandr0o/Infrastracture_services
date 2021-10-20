@@ -1,9 +1,9 @@
-- name: Restart nginx  
+- name: Restart prometheus
   ansible.builtin.service:
-    name: nginx
+    name: prometheus
     state: restarted
     
-- name: Reload nginx
+- name: Reload prometheus
   ansible.builtin.service:
-    name: nginx
+    name: prometheus
     state: reloaded

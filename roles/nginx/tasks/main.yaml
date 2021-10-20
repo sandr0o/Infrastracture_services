@@ -1,13 +1,14 @@
 - name: Install nginx
   apt: 
     name: nginx
-    state: latest 
+    
 
 - name: Replace vm /etc/nginx/sites-enabled/default with nginx configuration as uWSGI frontend
-  ansible.builtin.copy:
-    src: default
+  ansible.builtin.template:
+    src: default.j2
     dest: /etc/nginx/sites-enabled/default
   notify: 
+  - Reload nginx
   - Restart nginx  
     
 - name: Ensure nginx service is started unconditionally

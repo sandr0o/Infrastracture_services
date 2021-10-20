@@ -1,5 +1,0 @@
----
-  - name: Ansible 
-  - name: Web servers
-    hosts: web_servers
-    become: yes

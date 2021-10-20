@@ -2,43 +2,32 @@
 - name: Install bind9 
   apt:
     name: bind9
-    update_cache: yes
-
-- name: Stop and disable systemd-resolved
-  ansible.builtin.service:
-        name: systemd-resolved
-        state: stopped
-        enabled: no
-
+ 
 - name: Replace vm /etc/bind/named.conf.options with our named.conf.options.j2
   ansible.builtin.template:
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
-    mode: '0644'
   notify: 
   - Restart bind9
-
-- name: Replace vm /etc/resolv.conf with our resolve.conf.j2
-  ansible.builtin.template:
-    src: resolv.conf.j2
-    dest: /etc/resolv.conf
-    mode: '0644'
-  notify:
-  - Reload Remote Name Daemon Control
 
 - name: Replace db.local with db.luntik.sc.j2
   ansible.builtin.template:
     src: db.luntik.sc.j2
-    dest: /var/cache/bind/db.luntik.sc.j2
-    mode: '0644'
+    dest: /var/cache/bind/db.{{ startup }}
 
 - name: Replace /etc/bind/named.conf.local named.conf.local.j2    
   ansible.builtin.template:
     src: named.conf.local.j2
     dest: /etc/bind/named.conf.local
-    mode: '0644'
   notify:
     - Restart bind9
+
+- name: Replace vm /etc/resolv.conf with our resolve.conf.j2
+  ansible.builtin.template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+  notify:
+  - Reload Remote Name Daemon Control
 
 - name: Ensure Service is running even after VM restart 
   ansible.builtin.service:
@@ -46,3 +35,8 @@
     state: started
     enabled: yes
 
+- name: Stop and disable systemd-resolved
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: stopped
+    enabled: no

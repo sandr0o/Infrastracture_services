@@ -10,7 +10,6 @@
   become: yes
   roles:
     - mysql
-    - bind
     
 - name: Web server
   hosts: web_servers
@@ -20,10 +19,35 @@
     - agama
     - uwsgi
     - nginx
+
+- name: DNS server
+  hosts: dns_servers
+  become: yes
+  gather_facts: no
+  roles:
     - bind
 
+- name: VM 1
+  hosts: web_servers
+  become: yes
+  gather_facts: no
+  roles:
+    - copyrole
 
-  
+- name: Node exporter
+  hosts: node_exporters
+  become: yes
+  gather_facts: no
+  roles:
+    - node_exporter
+
+- name: prometheus
+  hosts: prometheus
+  become: yes
+  gather_facts: no
+  roles:
+    - prometheus
+    
 
 
 

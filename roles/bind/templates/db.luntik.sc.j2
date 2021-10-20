@@ -6,7 +6,7 @@ $TTL	604800
 			2419200		; Expire
 			 604800 )	; Negative Cache TTL
 ;
-{% for vm in groups['db_servers'] %}
+{% for vm in groups['dns_servers'] %}
 {{ domainName }}.	IN	NS	{{ vm }}
 {% endfor %}
 {% for vm in groups['all'] %}

@@ -1,18 +1,15 @@
 - name: Install mysql-server
   apt:
     name: mysql-server
-    state: latest
-
+    
 - name: Install PyMySQL
   apt:
     name: python3-pymysql
-    state: latest   
 
 - name: Replace vm /etc/mysql/mysql.conf.d/mysqld.cnf with override.cnf
   ansible.builtin.copy:
     src: override.cnf
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-    mode: '0644'
   notify: 
   - Restart mysql
 

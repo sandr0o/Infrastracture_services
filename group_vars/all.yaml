@@ -21,10 +21,18 @@ allowed:
 
 startup: luntik.sc
 
-nameserver: 192.168.42.139
+nameserver: 192.168.42.103
 
 vmIP:
-  - 192.168.42.104
-  - 192.168.42.139
+  - 192.168.42.191
+  - 192.168.42.103
+
+sandr0o-1: 192.168.42.191
+sandr0o-2: 192.168.42.103
+port1: 19180  
 
 domainName: luntik.sc
+
+vms:
+  - sandr0o-1
+  - sandr0o-2

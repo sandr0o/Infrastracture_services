@@ -1,0 +1,6 @@
+- name: Replace vm /etc/resolv.conf with our resolve.conf.j2
+  ansible.builtin.template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+  notify:
+  - Reload Remote Name Daemon Control
