@@ -3,7 +3,7 @@
     path: /opt/agama
     state: directory
     owner: agama
-    mode: '0644'
+    mode: '755'
 
 - name: Install dependencies
   apt:
@@ -14,4 +14,4 @@
     url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
     force: yes
     dest: /opt/agama/
-    mode: '0644'
+    mode: '755'

@@ -26,6 +26,7 @@
   gather_facts: no
   roles:
     - bind
+    - bind_exporter
 
 - name: VM 1
   hosts: web_servers
@@ -33,6 +34,8 @@
   gather_facts: no
   roles:
     - copyrole
+    - mysql_exporter
+    - nginx_ exporter
 
 - name: Node exporter
   hosts: node_exporters

@@ -1,0 +1,4 @@
+---
+- name: Install bind exporter
+  apt:
+    name: prometheus-bind-exporter
