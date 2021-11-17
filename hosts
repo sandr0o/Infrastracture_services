@@ -1,5 +1,5 @@
-sandr0o-1 ansible_port=3622
-sandr0o-2 ansible_port=3822
+sandr0o-1 ansible_port=8522
+sandr0o-2 ansible_port=14422
 
 [all:vars]
 ansible_host=193.40.156.86
@@ -9,6 +9,7 @@ ansible_user=ubuntu
 
 [web_servers]
 sandr0o-1
+sandr0o-2
 
 [db_servers]
 sandr0o-2
@@ -22,3 +23,6 @@ sandr0o-2
 
 [prometheus]
 sandr0o-1
+
+[grafana]
+sandr0o-2

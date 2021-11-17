@@ -1,4 +1,8 @@
 server {
+    listen 8080 default_server;
+    location = /stub_status {
+        stub_status;
+    }
 	listen 80 default_server;
 	root /var/www/html;
 	index index.html index.htm index.nginx-debian.html;
@@ -18,6 +22,26 @@ server {
 			proxy_pass http://localhost:9090;
 		}
 {% endif %}
-}	
+{% if inventory_hostname in groups['grafana'] %}
+		location /grafana {
+			proxy_pass http://localhost:3000;
+		}
+{% endif %}
 
+{% if inventory_hostname in groups['db_servers']%}
+	location /mysql-metrics {
+		proxy_pass http://localhost:9104/metrics;
+	}
+{% endif %}
+
+{% if inventory_hostname in groups['dns_servers']%}
+	location /bind-metrics {
+		proxy_pass http://localhost:9119/metrics;
+	}
+{% endif %}
+
+location /nginx-metrics {
+		proxy_pass http://localhost:9113/metrics;
+	}
+}	
 
