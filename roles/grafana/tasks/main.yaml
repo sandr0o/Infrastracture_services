@@ -12,16 +12,37 @@
 - name: Install grafana
   apt:
     name: grafana
-    
+
 - name: Ensure grafana server is started unconditionally
   ansible.builtin.service:
     name: grafana-server
     state: started
     enabled: yes
 
+- name: Create /var/lib/grafana/dashboards
+  ansible.builtin.file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+    mode: '0755'
+  
+- name: Copy main.json for dashboard
+  ansible.builtin.copy:
+    src: main.json
+    dest: /var/lib/grafana/dashboards/main.json
+
+- name: Set admin password
+  ansible.builtin.shell: grafana-cli admin reset-admin-password "{{ grafana_password }}"
+
+- name: change admin user
+  lineinfile:
+    path: /etc/grafana/grafana.ini
+    regexp: "{{ item.before }}"
+    line: "{{ item.after }}"
+  with_items:
+  - {before: "^;admin_user = admin", after: "admin_user = {{ grafana_user }}"}
+  - {before: "^;admin_password = admin", after: "admin_password = {{ grafana_password }}"}
+
 - template:
     src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini
   notify: restart grafana
-  
-

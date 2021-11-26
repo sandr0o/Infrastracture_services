@@ -13,7 +13,7 @@ server {
 		include uwsgi_params;
 	}
 
-	location /node_exporter {
+	location /node-metrics {
 		proxy_pass http://localhost:9100/metrics;
 	}
 

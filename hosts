@@ -1,11 +1,10 @@
-sandr0o-1 ansible_port=8522
-sandr0o-2 ansible_port=14422
+sandr0o-1 ansible_port=6822
+sandr0o-2 ansible_port=8622
 
 [all:vars]
 ansible_host=193.40.156.86
 ansible_python_interpreter=python3
 ansible_user=ubuntu
-
 
 [web_servers]
 sandr0o-1
