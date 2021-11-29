@@ -19,6 +19,22 @@
     state: started
     enabled: yes
 
+- name: Set admin password
+  ansible.builtin.shell: grafana-cli admin reset-admin-password "{{ grafana_password }}"
+  no_log: true
+
+- name: Copy datasource for provisioning
+  template:
+    src: datasource.yaml
+    dest: /etc/grafana/provisioning/datasources/
+  notify: restart grafana
+
+- name: Copy dashboard for provisioning
+  template:
+    src: dashboard.yaml
+    dest: /etc/grafana/provisioning/dashboards/
+  notify: restart grafana
+
 - name: Create /var/lib/grafana/dashboards
   ansible.builtin.file:
     path: /var/lib/grafana/dashboards
@@ -29,9 +45,6 @@
   ansible.builtin.copy:
     src: main.json
     dest: /var/lib/grafana/dashboards/main.json
-
-- name: Set admin password
-  ansible.builtin.shell: grafana-cli admin reset-admin-password "{{ grafana_password }}"
 
 - name: change admin user
   lineinfile:
@@ -46,3 +59,4 @@
     src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini
   notify: restart grafana
+  

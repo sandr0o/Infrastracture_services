@@ -4,7 +4,7 @@ apiVersion: 1
 datasources:
  - name: prometheus
    type: prometheus
-   url: http://sandr0o-1:/prometheus
+   url: http://sandr0o-1/prometheus
    isDefault: true
    editable: true
 

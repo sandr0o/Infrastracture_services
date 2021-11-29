@@ -1,0 +1,4 @@
+- name: Restart influxfb
+  ansible.builtin.service:
+    name: influxdb
+    state: restarted
