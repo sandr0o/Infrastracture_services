@@ -1,0 +1,33 @@
+- name: Add fping user
+  user:
+    name: fping_user
+
+- name: Install fping
+  apt:
+    name: fping
+
+- name: Template pinger.sh.j2
+  ansible.builtin.template:
+    src: pinger.sh.j2
+    dest: /usr/local/bin/pinger
+    owner: fping_user
+    group: fping_user
+    mode: '0744'
+
+- name: Template pinger.service.j2
+  ansible.builtin.template:
+    src: pinger.service.j2
+    dest: /etc/systemd/system/pinger.service
+
+- name: Create directory for pinger.config
+  file:
+    path: /etc/pinger
+    state: directory
+
+- name: Template pinger.conf.j2
+  ansible.builtin.template:
+    src: pinger.conf.j2
+    dest: /etc/pinger/pinger.conf
+  notify:
+    - Restart fping
+    - Reload systemctl daemon

@@ -1,0 +1,16 @@
+- name: Install rsyslog
+  apt:
+    name: rsyslog
+
+- name: Template 50-telegraf-conf.j2
+  template:
+    src: 50-telegraf.conf.j2
+    dest: /etc/rsyslog.d/50-default.conf
+  notify:
+    - Restart rsyslog
+
+- name: Ensure rsyslog is running
+  service:
+    name: rsyslog
+    state: started
+    enabled: yes

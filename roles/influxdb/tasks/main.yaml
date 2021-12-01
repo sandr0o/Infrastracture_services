@@ -1,23 +1,49 @@
-- name: Import InfluxDB GPG signing key
+- name: Import InfluxDB&Telegraf GPG signing key
   apt_key: url=https://repos.influxdata.com/influxdb.key state=present
 
-- name: Add InfluxDB repository
-  apt_repository: repo='deb https://repos.influxdata.com/ubuntu trusty stable' state=present
+- name: Add InfluxDB&Telegraf repository
+  apt_repository: repo='deb https://repos.influxdata.com/ubuntu focal stable' state=present
 
-- name: Install InfluxDB packages
-  apt: name=influxdb state=present
+- name: Install InfluxDB package
+  apt:
+     name: influxdb
 
-- name: Influxdb is started automatically
-  service: 
+- name: InfluxDB is started automatically
+  service:
     name: influxdb
     state: started
+    enabled: yes
 
-- name: Modify InfluxDB hostname
-  replace:
-    dest=/etc/influxdb/influxdb.conf
-    regexp='hostname = "localhost"'
-    replace='hostname = "{{ ansible_hostname }}"'
-    backup=yes
-  notify: 
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10
+
+- name: Install telegraf package
+  apt:
+    name: telegraf
+  notify:
+    - reload daemon telegraf
+
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10    
+
+- name: Telegraf is started automatically
+  service:
+    name: telegraf
+    state: started
+    enabled: yes
+
+- name: Copy influxb.conf.j2
+  template:
+    src: influxdb.conf.j2
+    dest: /etc/influxdb/influxdb.conf
+  notify:
     - Restart influxdb
-  
+
+- name: Copy telegraf.conf.j2
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+  notify:
+    - Restart telegraf

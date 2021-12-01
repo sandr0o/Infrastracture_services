@@ -5,6 +5,18 @@ datasources:
  - name: prometheus
    type: prometheus
    url: http://sandr0o-1/prometheus
-   isDefault: true
    editable: true
 
+datasources:
+  - name: influxdb
+    type: influxdb
+    url: http://sandr0o-2.{{ domainName }}:8086
+    database: latency
+    editable: true
+
+datasources:
+  - name: influxdb:telegraf
+    type: influxdb
+    url: http://sandr0o-2.{{ domainName }}:8086
+    database: telegraf
+    editable: true

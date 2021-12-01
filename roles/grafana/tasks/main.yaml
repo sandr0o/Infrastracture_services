@@ -19,44 +19,40 @@
     state: started
     enabled: yes
 
-- name: Set admin password
-  ansible.builtin.shell: grafana-cli admin reset-admin-password "{{ grafana_password }}"
-  no_log: true
-
 - name: Copy datasource for provisioning
   template:
     src: datasource.yaml
-    dest: /etc/grafana/provisioning/datasources/
+    dest: /etc/grafana/provisioning/datasources/datasource.yaml
   notify: restart grafana
 
 - name: Copy dashboard for provisioning
   template:
     src: dashboard.yaml
-    dest: /etc/grafana/provisioning/dashboards/
+    dest: /etc/grafana/provisioning/dashboards/dashboard.yaml
   notify: restart grafana
 
 - name: Create /var/lib/grafana/dashboards
   ansible.builtin.file:
     path: /var/lib/grafana/dashboards
     state: directory
-    mode: '0755'
-  
+    mode: 0755
+
 - name: Copy main.json for dashboard
   ansible.builtin.copy:
     src: main.json
     dest: /var/lib/grafana/dashboards/main.json
 
-- name: change admin user
-  lineinfile:
-    path: /etc/grafana/grafana.ini
-    regexp: "{{ item.before }}"
-    line: "{{ item.after }}"
-  with_items:
-  - {before: "^;admin_user = admin", after: "admin_user = {{ grafana_user }}"}
-  - {before: "^;admin_password = admin", after: "admin_password = {{ grafana_password }}"}
+- name: Copy rsyslog.json for dashboard
+  copy:
+    src: rsyslog.json
+    dest: /var/lib/grafana/dashboards/rsyslog.json
+
+- name: Copy influxdb.json for dashboard
+  ansible.builtin.copy:
+    src: influxdb.json
+    dest: /var/lib/grafana/dashboards/influxdb.json
 
 - template:
     src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini
   notify: restart grafana
-  

@@ -18,12 +18,12 @@
   gather_facts: yes
   roles:
     - mysql
-    
+
 - name: Web server
   hosts: web_servers
   become: yes
   gather_facts: yes
-  roles: 
+  roles:
     - users
     - agama
     - uwsgi
@@ -66,16 +66,37 @@
   gather_facts: yes
   roles:
     - grafana
+  tags:
+    - GRAFANA
 
 - name: Influxdb
   hosts: influxdb
   become: yes
   roles:
     - influxdb
-  tags: 
+  tags:
    - INFLUXDB
 
-    
+- name: pinger
+  hosts: pinger
+  become: yes
+  roles:
+    - pinger
+  tags:
+    - PINGER
 
+- name: Rsyslog
+  hosts: rsyslog
+  become: yes
+  roles:
+    - rsyslog
+  tags:
+    - RSYSLOG
 
-
+- name: Influxdb Stats Exporter
+  hosts: influxdb_stats_exporter
+  become: yes
+  roles:
+    - influxdb_exporter
+  tags:
+    - INFLUXDB_STATS_EXPORTER

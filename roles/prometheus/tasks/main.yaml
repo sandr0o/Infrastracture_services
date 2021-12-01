@@ -1,8 +1,8 @@
 - name: Install prometheus
-  apt: 
+  apt:
     name: prometheus
-    
-- name: Insert template into vm 
+
+- name: Insert template into vm
   ansible.builtin.template:
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml

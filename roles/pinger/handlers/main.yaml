@@ -1,0 +1,8 @@
+- name: Restart fping
+  service:
+    name: pinger
+    state: restarted
+
+- name: Reload systemctl daemon
+  systemd:
+    daemon_reload: yes

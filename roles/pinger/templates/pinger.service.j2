@@ -1,0 +1,11 @@
+[Unit]
+Description=pinger connection to latency
+Documentation=https://github.com/romankuchin/ica0002-2021/tree/main/08-logging
+After=network-online.target
+
+[Service]
+User=fping_user
+ExecStart=/usr/local/bin/pinger
+
+[Install]
+WantedBy=multi-user.target

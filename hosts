@@ -1,5 +1,5 @@
-sandr0o-1 ansible_port=12422
-sandr0o-2 ansible_port=5222
+sandr0o-1 ansible_port=13422
+sandr0o-2 ansible_port=7922
 
 [all:vars]
 ansible_host=193.40.156.86
@@ -27,4 +27,14 @@ sandr0o-1
 sandr0o-2
 
 [influxdb]
+sandr0o-2
+
+[pinger]
+sandr0o-2
+
+[rsyslog]
+sandr0o-1
+sandr0o-2
+
+[influxdb_stats_exporter]
 sandr0o-2

@@ -1,0 +1,14 @@
+- name: Restart influxdb_exporter
+  service:
+    name: prometheus-influxdb-stats-exporter
+    state: restarted
+    enabled: yes
+
+- name: Restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+    enabled: yes
+
+- name: Reload daemon
+  shell: systemctl daemon-reload
