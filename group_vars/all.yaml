@@ -30,15 +30,16 @@ allowed:
 
 startup: luntik.sc
 
-nameserver: 192.168.42.79
+nameserver: 192.168.42.105
+backupserver: 192.168.42.156
 
 host: 193.40.156.86
 
 vmIP:
-   - 192.168.42.134
-   - 192.168.42.79
+   - 192.168.42.115
+   - 192.168.42.105
 
-port1: 15822
+port1: 11522
 
 domainName: luntik.sc
 

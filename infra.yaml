@@ -11,6 +11,7 @@
   gather_facts: yes
   roles:
     - init
+    - backup
 
 - name: Database server
   hosts: db_servers
@@ -36,6 +37,8 @@
   roles:
     - bind
     - bind_exporter
+  tags:
+    - DNS
 
 - name: prometheus
   hosts: prometheus
