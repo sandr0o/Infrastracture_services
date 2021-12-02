@@ -1,7 +1,10 @@
 - name: Create user for backup
   user:
     name: backup
+    shell: /bin/bash
     generate_ssh_key: yes
     force: yes
-    home: /home/backup
+    ssh_key_bits: 2048
     ssh_key_file: /home/backup/.ssh/id_rsa
+    home: /home/backup
+    mode: 0755
