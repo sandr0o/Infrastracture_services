@@ -1,0 +1,13 @@
+- name: Ensure /home/backup/influxdb directory is created
+  file:
+    path: /home/backup/influxdb
+    state: directory
+    owner: backup
+    mode: 0744
+
+- name: Template influxdb-backup
+  template:
+    src: influxdb-backup.j2
+    dest: /etc/cron.d/influxdb-backup
+    owner: root
+    mode: 0744

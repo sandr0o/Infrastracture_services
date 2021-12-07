@@ -1,10 +1,40 @@
+- name: Ensure /home/backup/restore directory is created
+  file:
+    path: /home/backup/restore
+    state: directory
+    owner: backup
+    mode: 0744
+
+- name: Create backup directory with permission
+  file:
+    path: /home/backup
+    state: directory
+    mode: 0744
+    owner: backup
+
 - name: Create user for backup
   user:
     name: backup
     shell: /bin/bash
-    generate_ssh_key: yes
-    force: yes
-    ssh_key_bits: 2048
-    ssh_key_file: /home/backup/.ssh/id_rsa
     home: /home/backup
-    mode: 0755
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+- name: Install duplicity
+  apt:
+    name: duplicity
+
+#- name: Ensure /home/backup/.ssh/known_hosts file is created
+#  file:
+#    path: /home/backup/.ssh/known_hosts
+#    state: file
+#    owner: backup
+#    mode: 0777
+
+- name: Template backup-server-ssh-key to known hosts
+  template:
+    src: known_hosts.j2
+    dest: /home/backup/.ssh/known_hosts
+    owner: backup
+    mode: 0644

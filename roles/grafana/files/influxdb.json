@@ -20,14 +20,16 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P3C6603E967DC8568"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -97,7 +99,11 @@
       },
       "targets": [
         {
-          "alias": "tag_dst",
+          "alias": "tag_dest",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P3C6603E967DC8568"
+          },
           "groupBy": [
             {
               "params": [
@@ -144,7 +150,7 @@
       "type": "timeseries"
     }
   ],
-  "schemaVersion": 32,
+  "schemaVersion": 33,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -158,5 +164,6 @@
   "timezone": "",
   "title": "latency",
   "uid": "tOp_aCtnz",
-  "version": 1
+  "version": 1,
+  "weekStart": ""
 }

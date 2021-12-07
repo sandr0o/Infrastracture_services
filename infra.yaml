@@ -19,6 +19,7 @@
   gather_facts: yes
   roles:
     - mysql
+    - mysql_backup
 
 - name: Web server
   hosts: web_servers
@@ -77,6 +78,7 @@
   become: yes
   roles:
     - influxdb
+    - influxdb_backup
   tags:
    - INFLUXDB
 
