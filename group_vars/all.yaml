@@ -30,7 +30,7 @@ allowed:
 
 startup: luntik.sc
 
-nameserver: 192.168.42.37
+nameserver: 192.168.42.157
 backupserver: 192.168.42.156
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSne71MCp6CQCHURWe3CLud6vPDkLfL83Oab/giAI7O
 # ssh-ed25519
@@ -38,10 +38,10 @@ backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSne71MCp6CQCHURWe3C
 host: 193.40.156.86
 
 vmIP:
-   - 192.168.42.145
-   - 192.168.42.37
+   - 192.168.42.29
+   - 192.168.42.157
 
-port1: 14522
+port1: 2922
 
 domainName: luntik.sc
 
