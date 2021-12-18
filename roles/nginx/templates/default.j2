@@ -3,55 +3,55 @@ server {
     location = /stub_status {
         stub_status;
     }
-	listen 80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	server_name _;
+	  listen 80 default_server;
+	  root /var/www/html;
+	  index index.html index.htm index.nginx-debian.html;
+	  server_name _;
 
-	location / {
-		uwsgi_pass localhost:5000;
-		include uwsgi_params;
-	}
-
-	location /node-metrics {
-		proxy_pass http://localhost:9100/metrics;
-	}
-
-  location /nginx-metrics {
-  		proxy_pass http://localhost:9113/metrics;
+  	location / {
+  		uwsgi_pass localhost:5000;
+  		include uwsgi_params;
   	}
 
-  location /influxdb-metrics {
-		proxy_pass http://localhost:9424/metrics;
-	}
-
-  {% if inventory_hostname in groups['prometheus']%}
-  		location /prometheus {
-  			proxy_pass http://localhost:9090;
-  		}
-  {% endif %}
-
-  {% if inventory_hostname in groups['grafana']%}
-  		location /grafana {
-  			proxy_pass http://localhost:3000;
-  		}
-  {% endif %}
-
-  {% if inventory_hostname in groups['db_servers']%}
-  	location /mysql-metrics {
-  		proxy_pass http://localhost:9104/metrics;
+  	location /node-metrics {
+  		proxy_pass http://localhost:9100/metrics;
   	}
-  {% endif %}
 
-  {% if inventory_hostname in groups['dns_servers']%}
-  	location /bind-metrics {
-  		proxy_pass http://localhost:9119/metrics;
-  	}
-  {% endif %}
-
-  {% if inventory_hostname in groups['influxdb']%}
-    location /influxdb {
-    	proxy_pass http://localhost:8086/metrics;
+    location /nginx-metrics {
+    	proxy_pass http://localhost:9113/metrics;
     }
-  {% endif %}
+
+    location /influxdb-metrics {
+  		proxy_pass http://localhost:9424/metrics;
+  	}
+
+    {% if inventory_hostname in groups['prometheus'] %}
+    location /prometheus {
+    		proxy_pass http://localhost:9090;
+    }
+    {% endif %}
+
+    {% if inventory_hostname in groups['grafana'] %}
+    location /grafana {
+    		proxy_pass http://localhost:3000;
+    }
+    {% endif %}
+
+    {% if inventory_hostname in groups['db_servers'] %}
+    location /mysql-metrics {
+    		proxy_pass http://localhost:9104/metrics;
+    }
+    {% endif %}
+
+    {% if inventory_hostname in groups['dns_servers'] %}
+    location /bind-metrics {
+    		proxy_pass http://localhost:9119/metrics;
+    }
+    {% endif %}
+
+    {% if inventory_hostname in groups['influxdb'] %}
+    location /influxdb {
+    	  proxy_pass http://localhost:8086/metrics;
+    }
+    {% endif %}
 }

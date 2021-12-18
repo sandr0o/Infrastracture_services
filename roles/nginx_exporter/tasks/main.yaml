@@ -2,4 +2,9 @@
 - name: Install nginx exporter
   apt:
     name: prometheus-nginx-exporter
-    
+
+- name: Start nginx_exporter
+  service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: yes

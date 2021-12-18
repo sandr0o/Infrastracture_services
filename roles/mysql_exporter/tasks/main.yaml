@@ -3,7 +3,21 @@
   apt:
     name: prometheus-mysqld-exporter
 
-- template:
-    src: my.cnf.j2
+- name: Create directory for prometheus / /var/lib/prometheus
+  file:
+    path: /var/lib/prometheus
+    state: directory
+
+- name: Copy cnf
+  template:
+    src: .my.cnf.j2
     dest: /var/lib/prometheus/.my.cnf
+    owner: prometheus
+    mode: 0777
+  notify: Restart mysql_exporter
+
+- name: Template prometheus-mysqld-exporter
+  template:
+    src: prometheus-mysqld-exporter.j2
+    dest: /etc/default/prometheus-mysqld-exporter
   notify: Restart mysql_exporter

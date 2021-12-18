@@ -52,6 +52,11 @@
     src: influxdb.json
     dest: /var/lib/grafana/dashboards/influxdb.json
 
+- name: Copy mysql.json for dashboard
+  ansible.builtin.copy:
+    src: mysql.json
+    dest: /var/lib/grafana/dashboards/mysql.json
+
 - template:
     src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini

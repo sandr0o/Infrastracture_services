@@ -4,6 +4,4 @@
     state: restarted
 
 - name: Reload Remote Name Daemon Control
-  ansible.builtin.command:
-    cmd: rndc reload
-  failed_when: no
+  shell: "systemctl daemon-reload"

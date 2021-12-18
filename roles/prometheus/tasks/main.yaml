@@ -12,6 +12,12 @@
 - name: Replace prometheus default file with our changed default
   ansible.builtin.template:
       src: default.j2
-      dest: /etc/default/prometheus
+      dest: /etc/default/default
   notify:
     - Restart prometheus
+
+- name: Start prometheus
+  service:
+    name: prometheus
+    state: started
+    enabled: true

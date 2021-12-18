@@ -1,9 +1,12 @@
-- name: Restart nginx_exporter  
+- name: Restart nginx_exporter
   ansible.builtin.service:
     name: prometheus-nginx-exporter
     state: restarted
-    
-- name: Reload nginx_exporter
+
+- name: Restart nginx
   ansible.builtin.service:
-    name: prometheus-nginx-exporter
-    state: reloaded
+    name: nginx
+    state: restarted
+
+- name: Reload systemd
+  shell: systemctl daemon-reload

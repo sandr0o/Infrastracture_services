@@ -9,7 +9,7 @@
   community.mysql.mysql_user:
     name: backup
     password: "{{ mysql_password }}"
-    priv: "*.*:ALL,GRANT"
+    priv: "{{ mysql_database }}.*:LOCK TABLES,SELECT"
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: Template mysql configuration file
