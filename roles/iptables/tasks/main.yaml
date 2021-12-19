@@ -1,0 +1,26 @@
+- name: Install iptables-persistent
+  apt:
+    name:
+      - iptables-persistent
+    state: present
+
+- name: Docker ssl handhsake 
+  template:
+    src: iptables.mangle.j2
+    dest: /var/local/iptables.mangle
+
+- name: Sleep for 10 seconds
+  wait_for:
+    timeout: 10
+
+- name: Ensure ipltables-presistent is started
+  service:
+    name: netfilter-persistent
+    state: started
+    enabled: yes
+
+- name: Perform itpables-restore
+  community.general.iptables_state:
+    path: /var/local/iptables.mangle
+    state: restored
+    table: mangle

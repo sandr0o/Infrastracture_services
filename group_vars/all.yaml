@@ -57,7 +57,7 @@ allowed:
 
 startup: luntik.sc
 
-nameserver: 192.168.42.171
+nameserver: 192.168.42.194
 backupserver: 192.168.42.156
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSne71MCp6CQCHURWe3CLud6vPDkLfL83Oab/giAI7O
 # ssh-ed25519
@@ -65,8 +65,8 @@ backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSne71MCp6CQCHURWe3C
 host: 193.40.156.86
 
 vmIP:
-   - 192.168.42.171
-   - 192.168.42.23
+   - 192.168.42.21
+   - 192.168.42.194
 
 port1: 17122
 
@@ -77,3 +77,6 @@ vms:
   - sandr0o-2
 
 node_id: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'].split('.')[-1] }}"
+
+grafana_port: 3001
+agama_port: 8001

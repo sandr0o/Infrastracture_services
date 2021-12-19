@@ -22,6 +22,11 @@
   notify:
     - Restart bind9
 
+- name: Template resolv.conf for docker
+  ansible.builtin.template:
+   src: resolv.conf.j2
+   dest: /run/systemd/resolve/resolv.conf
+
 - name: Replace vm /etc/resolv.conf with our resolve.conf.j2
   ansible.builtin.template:
     src: resolv.conf.j2

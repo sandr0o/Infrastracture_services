@@ -13,6 +13,13 @@
     - init
     - backup
 
+- name: iptables
+  hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - iptables
+
 - name: Database server
   hosts: db_servers
   become: yes
@@ -20,6 +27,24 @@
   roles:
     - mysql
     - mysql_backup
+
+- name: Grafana
+  hosts: grafana
+  become: yes
+  gather_facts: yes
+  roles:
+    - grafana
+  tags:
+    - GRAFANA
+
+- name: Docker
+  hosts: docker
+  become: yes
+  gather_facts: yes
+  roles:
+    - docker
+  tags:
+    - DOCKER
 
 - name: Web server
   hosts: web_servers
@@ -64,15 +89,6 @@
   gather_facts: yes
   roles:
     - node_exporter
-
-- name: Grafana
-  hosts: grafana
-  become: yes
-  gather_facts: yes
-  roles:
-    - grafana
-  tags:
-    - GRAFANA
 
 - name: Influxdb
   hosts: influxdb

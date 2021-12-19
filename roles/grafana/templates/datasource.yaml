@@ -19,3 +19,6 @@ datasources:
     url: http://sandr0o-2.{{ domainName }}:8086
     database: telegraf
     editable: true
+
+
+
