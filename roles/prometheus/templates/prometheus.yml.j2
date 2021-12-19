@@ -10,18 +10,18 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: linux
-    static_configs:
-      - targets:
-        {% for vm in vms %}
-        - {{ vm }}:9100
-        {% endfor %}
+#  - job_name: linux
+#    static_configs:
+#      - targets:
+#        {% for vm in vms %}
+#       - {{ vm }}:9100
+#       {% endfor %}
 
   - job_name: grafana
     static_configs:
       - targets:
         {% for vm in groups['grafana'] %}
-        - {{ vm }}:3000
+        - {{ vm }}:3001
         {% endfor %}
 
   - job_name: bind9
@@ -65,3 +65,6 @@ scrape_configs:
         {% for vm in groups['influxdb_stats_exporter'] %}
         - {{ vm }}:9424
         {% endfor %}
+
+
+

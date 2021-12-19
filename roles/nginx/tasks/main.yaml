@@ -2,7 +2,6 @@
   apt: 
     name: nginx
     
-
 - name: Replace vm /etc/nginx/sites-enabled/default with nginx configuration as uWSGI frontend
   ansible.builtin.template:
     src: default.j2

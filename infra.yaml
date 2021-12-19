@@ -55,6 +55,8 @@
   roles:
     - mysql_exporter
     - nginx_exporter
+  tags:
+    - HELL
 
 - name: Node exporter
   hosts: node_exporters
@@ -104,3 +106,4 @@
     - influxdb_exporter
   tags:
     - INFLUXDB_STATS_EXPORTER
+

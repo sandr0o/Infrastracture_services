@@ -8,7 +8,7 @@
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify:
-  - Restart bind9
+   - Restart bind9
 
 - name: Replace db.local with db.luntik.sc.j2
   ansible.builtin.template:
@@ -27,7 +27,9 @@
     src: resolv.conf.j2
     dest: /etc/resolv.conf
   notify:
-  - Reload Remote Name Daemon Control
+   - Reload Remote Name Daemon Control
+   - Restart bind9
+   - rndc reload
 
 - name: Stop and disable systemd-resolved
   ansible.builtin.service:

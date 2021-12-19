@@ -5,3 +5,8 @@
 
 - name: Reload Remote Name Daemon Control
   shell: "systemctl daemon-reload"
+
+- name: rndc reload
+  ansible.builtin.command:
+    cmd: rndc reload
+  
