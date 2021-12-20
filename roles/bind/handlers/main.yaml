@@ -1,3 +1,15 @@
+- name: resolve directory
+  file:
+    path: /run/systemd/resolve
+    state: directory
+  become: yes
+
+- name: systemd/resolve
+  template:
+    src: resolv.conf.j2
+    dest: /run/systemd/resolve/resolv.conf
+  notify: rndc reload
+
 - name: Restart bind9
   ansible.builtin.service:
     name: bind9

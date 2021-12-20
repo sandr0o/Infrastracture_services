@@ -28,34 +28,6 @@
     - mysql
     - mysql_backup
 
-- name: Grafana
-  hosts: grafana
-  become: yes
-  gather_facts: yes
-  roles:
-    - grafana
-  tags:
-    - GRAFANA
-
-- name: Docker
-  hosts: docker
-  become: yes
-  gather_facts: yes
-  roles:
-    - docker
-  tags:
-    - DOCKER
-
-- name: Web server
-  hosts: web_servers
-  become: yes
-  gather_facts: yes
-  roles:
-    - users
-    - agama
-    - uwsgi
-    - nginx
-
 - name: DNS server
   hosts: dns_servers
   become: yes
@@ -66,12 +38,44 @@
   tags:
     - DNS
 
+- name: Docker
+  hosts: docker
+  become: yes
+  gather_facts: yes
+  roles:
+    - docker
+  tags:
+    - DOCKER
+
+- name: Grafana
+  hosts: grafana
+  become: yes
+  gather_facts: yes
+  roles:
+    - grafana
+  tags:
+    - GRAFANA
+
+- name: Web server
+  hosts: web_servers
+  become: yes
+  gather_facts: yes
+  roles:
+    - users
+    - agama
+    - uwsgi
+    - nginx
+  tags:
+    - WEBSERVERS
+
 - name: prometheus
   hosts: prometheus
   become: yes
   gather_facts: yes
   roles:
     - prometheus
+  tags:
+    - PROMETHEUS
 
 - name: VM 1
   hosts: web_servers
@@ -123,3 +127,12 @@
   tags:
     - INFLUXDB_STATS_EXPORTER
 
+- name: Install loadbalancer
+  hosts: loadbalancer
+  gather_facts: yes
+  become: yes
+  roles:
+    - keepalived
+    - haproxy
+  tags:
+    - LOADBALANCER

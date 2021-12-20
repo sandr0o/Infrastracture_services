@@ -10,6 +10,12 @@
   - Reload nginx
   - Restart nginx  
     
+- name: Copy index.html to server
+  copy:
+    src: index.html
+    dest: /var/www/html/index.html
+    follow: no
+
 - name: Ensure nginx service is started unconditionally
   ansible.builtin.service:
     name: nginx

@@ -57,18 +57,14 @@ allowed:
 
 startup: luntik.sc
 
-nameserver: 192.168.42.194
+nameserver: 192.168.42.161
 backupserver: 192.168.42.156
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSne71MCp6CQCHURWe3CLud6vPDkLfL83Oab/giAI7O
 # ssh-ed25519
 
 host: 193.40.156.86
 
-vmIP:
-   - 192.168.42.21
-   - 192.168.42.194
-
-port1: 17122
+port1: 7322
 
 domainName: luntik.sc
 
@@ -80,3 +76,19 @@ node_id: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'].spl
 
 grafana_port: 3001
 agama_port: 8001
+nginx_port: 8080
+pinger_port: 8086
+prometheus_port: 9090
+
+keepalived_interface: ens3
+keepalived_virtual_id: 13
+
+public_url: http://{{ ansible_host }}:{{ ansible_port//100}}80
+
+mysql_exporter_port: 9104
+bind_exporter_port: 9119
+node_exporter_port: 9100
+nginx_exporter_port: 9113
+influxdb_exporter_port: 9424
+keepalived_exporter_port: 9165
+haproxy_exporter_port: 9101

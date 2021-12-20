@@ -1,5 +1,5 @@
-sandr0o-1 ansible_port=2122
-sandr0o-2 ansible_port=19422
+sandr0o-1 ansible_port=7322
+sandr0o-2 ansible_port=16122
 
 [all:vars]
 ansible_host=193.40.156.86
@@ -46,5 +46,9 @@ sandr0o-2
 sandr0o-2
 
 [mysqld_exporter]
+sandr0o-1
+sandr0o-2
+
+[loadbalancer]
 sandr0o-1
 sandr0o-2

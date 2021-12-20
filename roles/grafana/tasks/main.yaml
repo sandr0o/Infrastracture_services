@@ -27,7 +27,7 @@
 - name: Copy grafana dashboards
   copy:
     src: "{{ item }}.json"
-    dest: "/opt/grafana/provisioning/dashboards/{{ item }}.json"
+    dest: /opt/grafana/provisioning/dashboards/{{ item }}.json
   loop:
     - rsyslog
     - mysql

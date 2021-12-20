@@ -4,23 +4,25 @@
       - iptables-persistent
     state: present
 
-- name: Docker ssl handhsake 
+- name: fix ssl handshake docker
   template:
     src: iptables.mangle.j2
-    dest: /var/local/iptables.mangle
+    dest: /etc/iptables/rules.v4    
 
-- name: Sleep for 10 seconds
+- name: Sleep for 10 seconds and continue with play
   wait_for:
     timeout: 10
 
-- name: Ensure ipltables-presistent is started
+- name: Check if  iptables-persistent (netfilter-persistent) is started and if it is not, start it
   service:
     name: netfilter-persistent
     state: started
     enabled: yes
 
-- name: Perform itpables-restore
+- name: load iptable-mangle config
   community.general.iptables_state:
-    path: /var/local/iptables.mangle
-    state: restored
+    state: restored    
+    path: /etc/iptables/rules.v4      
     table: mangle
+
+    

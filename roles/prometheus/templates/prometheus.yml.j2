@@ -66,5 +66,19 @@ scrape_configs:
         - {{ vm }}:9424
         {% endfor %}
 
+  - job_name: keepalived_exporter
+    static_configs:
+        - targets:
+          {% for vm in groups['loadbalancer'] %}
+          - '{{ vm }}:{{ keepalived_exporter_port}}'
+          {% endfor %}
+
+  - job_name: haproxy_exporter
+    static_configs:
+      - targets:
+        {% for vm in groups['loadbalancer'] %}
+         - '{{ vm }}:{{ haproxy_exporter_port}}'  
+        {% endfor %}
+
 
 

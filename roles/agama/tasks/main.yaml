@@ -8,6 +8,10 @@
     url: https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
     dest: /opt/agama/Dockerfile
 
+- name: Install dependencies
+  apt:
+    name: python3-flask-sqlalchemy
+
 - name: Build agama.iso on docker
   community.docker.docker_image:
     name: agama
@@ -15,20 +19,20 @@
     build:
       path: /opt/agama
 
-- name: Bind agama-1 port to 8000
+- name: Create agama-1 container
   community.docker.docker_container:
     name: agama-1
     image: agama
     env:
       AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
     published_ports: "{{ agama_port }}:8000"
+    #restart_policy: always
 
-- name: Bind agama-2 port to 8000
+- name: Create agama-2 container
   community.docker.docker_container:
     name: agama-2
     image: agama
     env:
       AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
-    published_ports: "{{ agama_port + 1}}:8000"
-    restart_policy: always
-
+    published_ports: "{{ agama_port + 1 }}:8000"
+    #restart_policy: always
