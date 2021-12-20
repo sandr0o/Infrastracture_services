@@ -3,29 +3,42 @@
   apt:
     name: bind9
     
-- name: Replace vm /etc/bind/named.conf.options with our named.conf.options.j2
+- name: Template vm /etc/bind/named.conf.options with our named.conf.options.j2
   ansible.builtin.template:
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
+  no_log: true
   notify:
    - Restart bind9
 
-- name: Replace db.local with db.luntik.sc.j2
-  ansible.builtin.template:
+- name: Replace db.luntik.sc DNS
+  when: inventory_hostname in groups['dns_masters']
+  template:
     src: db.luntik.sc.j2
     dest: /var/cache/bind/db.{{ domainName }}
+  no_log: true
   notify: 
     - Restart bind9
     - rndc reload
 
-- name: Replace /etc/bind/named.conf.local named.conf.local.j2
+- name: Template db.luntik.sc.reverse.j2 DNS 
+  when: inventory_hostname in groups['dns_masters']
+  template: 
+    src: db.luntik.sc.reverse.j2
+    dest: /var/cache/bind/db.{{ domainName }}.reverse
+    force: no
+  #no_log: true    
+  notify:
+    - rndc reload 
+
+- name: Template /etc/bind/named.conf.local named.conf.local.j2
   ansible.builtin.template:
     src: named.conf.local.j2
     dest: /etc/bind/named.conf.local
   notify:
     - Restart bind9
 
-- name: Replace vm /etc/resolv.conf with our resolve.conf.j2
+- name: Template /etc/resolv.conf with our resolve.conf.j2
   ansible.builtin.template:
     src: resolv.conf.j2
     dest: /etc/resolv.conf
@@ -44,6 +57,35 @@
 
 - name: Execute handlers
   meta: flush_handlers
+
+- name: Set A records
+  when: inventory_hostname in groups["dns_masters"]
+  nsupdate:
+    key_algorithm: "hmac-sha256"
+    key_name: "dns_update"
+    key_secret: "{{ dns_update }}"
+    server: "localhost"
+    zone: "{{ domainName }}"
+    record: "{{ item.key }}"
+    type: "A"
+    value: "{{ item.value }}"
+  loop: "{{ dns_a_records | dict2items }}"
+  run_once: True
+
+- name: Set CNAME records
+  when: inventory_hostname in groups["dns_masters"]
+  nsupdate:
+    key_algorithm: "hmac-sha256"
+    key_name: "dns_update"
+    key_secret: "{{ dns_update }}"
+    server: "localhost"
+    zone: "{{ domainName }}"
+    record: "{{ item.key }}"
+    type: "CNAME"
+    value: "{{ item.value }}"
+  loop: "{{ dns_cname_records | dict2items }}"
+  run_once: True
+
 
 - name: Ensure Service is running even after VM restart
   ansible.builtin.service:
