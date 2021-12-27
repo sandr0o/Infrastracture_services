@@ -1,5 +1,6 @@
-sandr0o-1 ansible_port=7322
-sandr0o-2 ansible_port=16122
+sandr0o-1 ansible_port=7822
+sandr0o-2 ansible_port=12322
+sandr0o-3 ansible_port=10722
 
 [all:vars]
 ansible_host=193.40.156.86
@@ -15,14 +16,27 @@ sandr0o-2
 sandr0o-1
 
 [dns_masters]
-sandr0o-2
+sandr0o-3
 
 [dns_slaves]
 sandr0o-1
+sandr0o-2
 
 [dns_servers:children]
 dns_masters
 dns_slaves
+
+[backup]
+sandr0o-1
+sandr0o-2
+sandr0o-3
+
+[application]
+sandr0o-1
+sandr0o-2
+
+[internal]
+sandr0o-3
 
 [node_exporters]
 sandr0o-1
@@ -33,6 +47,15 @@ sandr0o-1
 
 [grafana]
 sandr0o-2
+
+[vm1_exporters]
+sandr0o-1
+
+[vm2_exporters]
+sandr0o-2
+
+[vm3_exporters]
+sandr0o-3
 
 [docker]
 sandr0o-1
@@ -58,3 +81,12 @@ sandr0o-2
 [loadbalancer]
 sandr0o-1
 sandr0o-2
+
+[vm1]
+sandr0o-1
+
+[vm2]
+sandr0o-2
+
+[vm3]
+sandr0o-3

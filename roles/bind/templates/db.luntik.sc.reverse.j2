@@ -12,9 +12,9 @@ $TTL	604800
 {% for vm  in groups ['dns_servers'] %}
 42.168.192.in-addr.arpa. IN NS {{ vm }}.{{ domainName }}.
 {% endfor %}
+
 {% for vm  in groups ['all'] %}
 {{ (hostvars[vm]['ansible_default_ipv4']['address']|split('.'))[3] }} IN PTR {{ vm }}.{{ domainName }}.
 {% endfor %}
-
 backup.{{ domainName }}. IN A {{ backupserver }}
 

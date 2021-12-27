@@ -3,6 +3,15 @@
   apt:
     name: bind9
     
+- name: Install 'python3-dnspython'
+  apt:
+    name: python3-dnspython
+
+- name: Create directory /var/cache/bind
+  file:
+    path: /var/cache/bind
+    state: directory
+
 - name: Template vm /etc/bind/named.conf.options with our named.conf.options.j2
   ansible.builtin.template:
     src: named.conf.options.j2

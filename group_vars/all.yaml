@@ -57,14 +57,14 @@ allowed:
 
 startup: luntik.sc
 
-nameserver: 192.168.42.161
+nameserver: 192.168.42.123
 backupserver: 192.168.42.156
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSne71MCp6CQCHURWe3CLud6vPDkLfL83Oab/giAI7O
 # ssh-ed25519
 
 host: 193.40.156.86
 
-port1: 7322
+port1: 7822
 
 domainName: luntik.sc
 
@@ -115,17 +115,25 @@ dns_cname_records:
   grafana: "{{ groups['grafana'][0] }}"
   influxdb: "{{ groups['influxdb'][0] }}"
   prometheus: "{{ groups['prometheus'][0] }}"
-  web1: "{{ groups['nginx'][0] }}"
-  web2: "{{ groups['nginx'][1] }}"
+  web1: "{{ groups['all'][0] }}"
+  web2: "{{ groups['all'][1] }}"
+  #web3: "{{ groups['all'][2] }}"
   lb1: "{{ groups['web_servers'][0] }}"
   lb2: "{{ groups['web_servers'][1] }}"
   mysql1: "{{ groups['db_servers'][0] }}"
   mysql2: "{{ groups['db_servers'][1] }}"
   ns1: "{{ groups['dns_servers'][0] }}"
   ns2: "{{ groups['dns_servers'][1] }}"
+  #ns3: "{{ groups['dns_servers'][2] }}"
 
 dns_a_records:
   backup: 192.168.42.156
   cloudfare: 1.1.1.1
   google: 8.8.8.8
   google2: 8.8.4.4
+
+vm_hostname: "{{ inventory_hostname }}"
+vm0: sandr0o
+vm1: sandr0o-1
+vm2: sandr0o-2
+vm3: sandr0o-3
