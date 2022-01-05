@@ -16,9 +16,7 @@
   ansible.builtin.template:
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
-  no_log: true
-  notify:
-   - Restart bind9
+  notify: Restart bind9
 
 - name: Replace db.luntik.sc DNS
   when: inventory_hostname in groups['dns_masters']
@@ -38,7 +36,7 @@
     force: no
   #no_log: true    
   notify:
-    - rndc reload 
+    - Restart bind9 
 
 - name: Template /etc/bind/named.conf.local named.conf.local.j2
   ansible.builtin.template:
@@ -94,7 +92,6 @@
     value: "{{ item.value }}"
   loop: "{{ dns_cname_records | dict2items }}"
   run_once: True
-
 
 - name: Ensure Service is running even after VM restart
   ansible.builtin.service:

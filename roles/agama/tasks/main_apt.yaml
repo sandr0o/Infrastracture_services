@@ -2,16 +2,18 @@
   ansible.builtin.file:
     path: /opt/agama
     state: directory
-    owner: agama
-    mode: '755'
+    owner: root
+    group: root
+    recurse: true
 
 - name: Install dependencies
   apt:
     name: python3-flask-sqlalchemy
+    update_cache: yes
 
 - name: Install agama application 
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
     force: yes
-    dest: /opt/agama/
-    mode: '755'
+    dest: /opt/agama
+    mode: 0755

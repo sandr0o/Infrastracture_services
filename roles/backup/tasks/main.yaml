@@ -1,16 +1,13 @@
-- name: Ensure /home/backup/restore directory is created
+- name: Create directories for backup&restore
   file:
-    path: /home/backup/restore
+    path: /home/backup/{{ item }}
     state: directory
     owner: backup
-    mode: 0744
-
-- name: Create backup directory with permission
-  file:
-    path: /home/backup
-    state: directory
-    mode: 0744
-    owner: backup
+    group: backup
+    mode: '0755'
+  loop:
+    - backup
+    - restore
 
 - name: Create user for backup
   user:
@@ -37,4 +34,5 @@
     src: known_hosts.j2
     dest: /home/backup/.ssh/known_hosts
     owner: backup
+    group: backup
     mode: 0644
