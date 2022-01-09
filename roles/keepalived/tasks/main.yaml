@@ -1,9 +1,10 @@
+---
 - name: Install keepalived
   apt:
     name:
       - keepalived
 
-- name: Copy keepalived conf
+- name: Template keepalived conf
   template:
     src: keepalived.conf.j2
     dest: /etc/keepalived/keepalived.conf
@@ -16,30 +17,27 @@
     mode: 0755
   notify: Restart keepalived
 
-- name: Ensure keepalived is started automatically
+- name: start keepalived
   service:
     name: keepalived
     state: started
 
-- name: Install keepalived exporter
+- name: Download keepalived exporter and unarchive
   unarchive:
     src: https://github.com/cafebazaar/keepalived-exporter/releases/download/v1.2.0/keepalived-exporter-1.2.0.linux-amd64.tar.gz
     dest: /usr/local/bin
     remote_src: yes
 
-- name: Create keepalived service
+- name: Create keepalived prometheus exporter service
   template:
-    src: keepalived-exporter.service.j2
-    dest: /etc/systemd/system/keepalived-exporter.service
+    src: keepalived-prometheus-exporter.service.j2
+    dest: /etc/systemd/system/keepalived-prometheus-exporter.service
   notify:
-    - Systemctl daemon-reload
+    - Reload daemons
     - Restart keepalived_exporter
 
-- name: Ensure keepalived is started automatically
+- name: Verify that keepalived exporter is running
   service:
-    name: keepalived-exporter
+    name: keepalived-prometheus-exporter.service
     state: started
     enabled: yes
-
-
-

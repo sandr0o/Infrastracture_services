@@ -13,12 +13,12 @@ vrrp_instance agama {
     {% endif %}
     advert_int 1                            
     virtual_ipaddress {                     
-        192.168.42.{{ (hostvars['sandr0o-2']['ansible_default_ipv4']['address'] | split('.'))[3] }}/24
+        192.168.100.{{ (hostvars['sandr0o-2']['ansible_default_ipv4']['address'] | split('.'))[3] }}/24
     }
     unicast_peer {
-        {% for vm in groups["web_servers"] %}
+        {% for vm in groups["agama"] %}
         {% if vm != inventory_hostname %}
-          {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
+        {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
         {% endif %}
         {% endfor %}
     }
@@ -26,5 +26,3 @@ vrrp_instance agama {
         check_haproxy
     }
 }
-
-

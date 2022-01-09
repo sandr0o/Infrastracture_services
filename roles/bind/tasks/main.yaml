@@ -19,17 +19,18 @@
   notify: Restart bind9
 
 - name: Replace db.luntik.sc DNS
-  when: inventory_hostname in groups['dns_masters']
+  when: inventory_hostname in groups['dns_master']
   template:
     src: db.luntik.sc.j2
     dest: /var/cache/bind/db.{{ domainName }}
+    force: no
   no_log: true
   notify: 
     - Restart bind9
     - rndc reload
 
 - name: Template db.luntik.sc.reverse.j2 DNS 
-  when: inventory_hostname in groups['dns_masters']
+  when: inventory_hostname in groups['dns_master']
   template: 
     src: db.luntik.sc.reverse.j2
     dest: /var/cache/bind/db.{{ domainName }}.reverse
@@ -37,6 +38,7 @@
   #no_log: true    
   notify:
     - Restart bind9 
+    - rndc reload
 
 - name: Template /etc/bind/named.conf.local named.conf.local.j2
   ansible.builtin.template:
@@ -50,11 +52,13 @@
     src: resolv.conf.j2
     dest: /etc/resolv.conf
   notify:
-   #- Reload Remote Name Daemon Control
-   - resolve directory
-   - systemd/resolve
-   - Restart bind9
    - rndc reload
+
+- name: Copy /run/systemd/resolve/resolv.conf for docker
+  ansible.builtin.template:
+    src: resolv.conf.j2
+    dest: /run/systemd/resolve/resolv.conf
+  notify: restart docker machines
 
 - name: Stop and disable systemd-resolved
   ansible.builtin.service:

@@ -1,3 +1,4 @@
+---
 - name: Create two necessary directories for grafana
   file:
     path: '{{ item }}'
@@ -7,19 +8,19 @@
     - /opt/grafana/provisioning/dashboards
     - /opt/grafana/provisioning/datasources
 
-- name: Copy grafana.ini template
+- name: Template grafana.ini 
   template:
     src: grafana.ini.j2
     dest: /opt/grafana/grafana.ini
   notify: Restart grafana docker
 
-- name: Copy datasource.yaml to grafana
+- name: Template datasource.yaml to grafana
   template:
     src: datasource.yaml
     dest: /opt/grafana/provisioning/datasources/datasource.yaml
   notify: Restart grafana docker
 
-- name: Copy dashboard.yaml to grafana
+- name: Template dashboard.yaml to grafana
   template:
     src: dashboard.yaml
     dest: /opt/grafana/provisioning/dashboards/dashboard.yaml
@@ -27,9 +28,9 @@
 - name: Copy grafana dashboards
   copy:
     src: "{{ item }}.json"
-    dest: /opt/grafana/provisioning/dashboards/{{ item }}.json
+    dest: "/opt/grafana/provisioning/dashboards/{{ item }}.json"
   loop:
-    - rsyslog
+    - syslog
     - mysql
     - main
 
@@ -40,4 +41,3 @@
     published_ports: "{{ grafana_port }}:3000"
     volumes: /opt/grafana:/etc/grafana
     restart_policy: always
-  notify: Restart grafana docker

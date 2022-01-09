@@ -22,17 +22,10 @@
   apt:
     name: duplicity
 
-#- name: Ensure /home/backup/.ssh/known_hosts file is created
-#  file:
-#    path: /home/backup/.ssh/known_hosts
-#    state: file
-#    owner: backup
-#    mode: 0777
-
 - name: Template backup-server-ssh-key to known hosts
   template:
     src: known_hosts.j2
     dest: /home/backup/.ssh/known_hosts
-    owner: backup
-    group: backup
+    owner: root
+    group: root
     mode: 0644

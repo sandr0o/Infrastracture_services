@@ -1,92 +1,66 @@
-sandr0o-1 ansible_port=5822
-sandr0o-2 ansible_port=12722
-sandr0o-3 ansible_port=16722
+sandr0o-1 ansible_port=17322
+sandr0o-2 ansible_port=12622
+sandr0o-3 ansible_port=19222
 
 [all:vars]
 ansible_host=193.40.156.67
 ansible_python_interpreter=python3
 ansible_user=ubuntu
 
+[db_servers]
+sandr0o-1
+sandr0o-2
+
+[agama]
+sandr0o-1
+sandr0o-2
+
 [web_servers]
 sandr0o-1
 sandr0o-2
 
-[db_servers]
-sandr0o-2
-sandr0o-1
-
-[dns_masters]
-sandr0o-3
-
-[dns_slaves]
-sandr0o-1
-sandr0o-2
-
-[dns_servers:children]
-dns_masters
+[dns_server:children]
+dns_master
 dns_slaves
 
-[backup]
-sandr0o-1
-sandr0o-2
-sandr0o-3
-
-[application]
-sandr0o-1
-sandr0o-2
-
-[internal]
-sandr0o-3
-
-[node_exporters]
-sandr0o-1
-sandr0o-2
-
 [prometheus]
-sandr0o-1
-
-[grafana]
-sandr0o-2
-
-[vm1_exporters]
-sandr0o-1
-
-[vm2_exporters]
-sandr0o-2
-
-[vm3_exporters]
 sandr0o-3
 
-[docker]
+[bind_exporter]
 sandr0o-1
 sandr0o-2
-
-[influxdb]
-sandr0o-2
-
-[pinger]
-sandr0o-2
-
-[rsyslog]
-sandr0o-1
-sandr0o-2
-
-[influxdb_stats_exporter]
-sandr0o-2
+sandr0o-3
 
 [mysqld_exporter]
 sandr0o-1
 sandr0o-2
 
+[influx_db]
+sandr0o-3
+
+[influxdb_exporter]
+sandr0o-3
+
+[nginx_exporter]
+sandr0o-1
+sandr0o-2
+sandr0o-3
+
+[node_exporter]
+sandr0o-1
+sandr0o-2
+sandr0o-3
+
+[grafana]
+sandr0o-3
+
 [loadbalancer]
 sandr0o-1
 sandr0o-2
 
-[vm1]
-sandr0o-1
-
-[vm2]
-sandr0o-2
-
-[vm3]
+[dns_master]
 sandr0o-3
+
+[dns_slaves]
+sandr0o-1
+sandr0o-2

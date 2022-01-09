@@ -1,16 +1,14 @@
 $TTL	604800
-{% for vm  in groups ['dns_masters'] %}
-42.168.192.in-addr.arpa. IN SOA {{ vm }}.{{ domainName }}. db.{{ domainName }}. (
+42.168.192.in-addr.arpa. IN SOA sandr0o-1.{{ domainName }}. db.{{ domainName }}. (
 			      2		; Serial
 			 604800		; Refresh
 			  86400		; Retry
 			2419200		; Expire
 			 604800 )	; Negative Cache TTL
 ;
-{% endfor %}
 
-{% for vm  in groups ['dns_servers'] %}
-42.168.192.in-addr.arpa. IN NS {{ vm }}.{{ domainName }}.
+{% for vm  in groups ['dns_server'] %}
+42.168.192.in-addr.arpa. IN	NS {{ vm }}.{{ domainName }}.
 {% endfor %}
 
 {% for vm  in groups ['all'] %}

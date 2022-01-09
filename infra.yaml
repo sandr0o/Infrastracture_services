@@ -7,127 +7,176 @@
 
 - name: Init
   hosts: all
+  gather_facts: no
   become: yes
-  gather_facts: yes
   roles:
+    - init
+    - backup
+  tags:
     - init
     - backup
 
 - name: iptables
   hosts: all
-  gather_facts: yes
+  gather_facts: no
   become: yes
   roles:
     - iptables
 
-- name: Database server
-  hosts: db_servers
+- name: Bind9 DNS server
+  hosts: dns_server
+  gather_facts: no
   become: yes
-  gather_facts: yes
-  roles:
-    - mysql
-    - mysql_backup
-
-- name: DNS server
-  hosts: dns_servers
-  become: yes
-  gather_facts: yes
   roles:
     - bind
-    - bind_exporter
   tags:
-    - DNS
+    - bind
+    - exporter
+    - grafana
+    - webserver
 
-- name: Docker
-  hosts: docker
+- name: Docker instances
+  hosts: all
+  gather_facts: no
   become: yes
-  gather_facts: yes
   roles:
     - docker
   tags:
-    - DOCKER
+    - docker
 
-- name: Grafana
-  hosts: grafana
+- name: Install nginx on all machines
+  hosts: all
+  gather_facts: no
   become: yes
-  gather_facts: yes
   roles:
-    - grafana
-  tags:
-    - GRAFANA
-
-- name: Web server
-  hosts: web_servers
-  become: yes
-  gather_facts: yes
-  roles:
-    - users
-    - agama
-    - uwsgi
     - nginx
   tags:
-    - WEBSERVERS
+    - exporter
+    - webserver
 
-- name: prometheus
-  hosts: prometheus
+- name: upload rsyslog conf
+  hosts: all
+  gather_facts: no
   become: yes
-  gather_facts: yes
+  roles:
+    - rsyslog
+  tags:
+    - rsyslog
+
+- name: Database server
+  hosts: db_servers
+  gather_facts: no
+  become: yes
+  roles:
+    - mysql
+    - mysql_backup
+  tags:
+    - mysql
+    - backup
+    - webserver
+    - db
+
+- name: Ansible webservers 
+  hosts: agama
+  gather_facts: no
+  become: yes
+  roles:
+    - agama
+    - uwsgi
+  tags:
+    - agama
+    - webserver
+
+- name: Install and configure prometheus-node-exporter
+  hosts: all
+  gather_facts: no
+  become: yes
+  roles:
+    - node_exporter
+  tags:
+    - exporter
+
+- name: Install and configure prometheus
+  hosts: prometheus
+  gather_facts: no
+  become: yes
   roles:
     - prometheus
   tags:
-    - PROMETHEUS
+    - prometheus
+    - grafana
 
-- name: VM 1
-  hosts: web_servers
+- name: Install and configure bind-exporter
+  hosts: dns_server
+  gather_facts: no
   become: yes
-  gather_facts: yes
+  roles:
+    - bind_exporter
+  tags:
+    - exporter
+
+- name: Install and configure mysqld-exporter
+  hosts: mysqld_exporter
+  gather_facts: no
+  become: yes
   roles:
     - mysql_exporter
+  tags:
+    - exporter
+
+- name: Install and configure nginx-exporter
+  hosts: nginx_exporter
+  gather_facts: no
+  become: yes
+  roles:
     - nginx_exporter
   tags:
-    - HELL
+    - exporter
 
-- name: Node exporter
-  hosts: node_exporters
+- name: Install and configure grafana
+  hosts: grafana
+  gather_facts: no
   become: yes
-  gather_facts: yes
   roles:
-    - node_exporter
+    - grafana
+  tags:
+    - grafana
+    - g
 
-- name: Influxdb
-  hosts: influxdb
+- name: Install and configure influxdb
+  hosts: influx_db
+  gather_facts: no
   become: yes
   roles:
     - influxdb
     - influxdb_backup
   tags:
-   - INFLUXDB
+    - influx
+    - backup
+    - grafana
+    - db
 
-- name: pinger
-  hosts: pinger
+- name: Create pinger and configure it
+  hosts: influx_db
+  gather_facts: no
   become: yes
   roles:
     - pinger
   tags:
-    - PINGER
+    - pinger
+    - grafana
 
-- name: Rsyslog
-  hosts: rsyslog
-  become: yes
-  roles:
-    - rsyslog
-  tags:
-    - RSYSLOG
-
-- name: Influxdb Stats Exporter
-  hosts: influxdb_stats_exporter
+- name: Create influxdb_stats_exporter
+  hosts: influx_db
+  gather_facts: no
   become: yes
   roles:
     - influxdb_exporter
   tags:
-    - INFLUXDB_STATS_EXPORTER
+    - influxdb_exporter
+    - exporter
 
-- name: Install loadbalancer
+- name: Install and configure loadbalancer
   hosts: loadbalancer
   gather_facts: yes
   become: yes
@@ -135,4 +184,4 @@
     - keepalived
     - haproxy
   tags:
-    - LOADBALANCER
+    - balancer

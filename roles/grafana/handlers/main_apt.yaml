@@ -1,5 +1,5 @@
 - name: Restart grafana docker
-  docker_container:
-    name: grafana
-    state: started
-    restart: yes
+  service:
+    name: grafana-server
+    state: restarted
+    enabled: true
