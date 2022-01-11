@@ -8,6 +8,7 @@
     dest: /etc/prometheus/prometheus.yml
   notify:
     - Restart prometheus
+    - Reload prometheus
 
 - name: Replace prometheus default file with our changed default
   ansible.builtin.template:
@@ -15,6 +16,7 @@
       dest: /etc/default/prometheus
   notify:
     - Restart prometheus
+    - Reload prometheus
 
 - name: Start prometheus
   service:

@@ -1,6 +1,6 @@
 global:
-  scrape_interval:     15s
-  evaluation_interval: 15s
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
 
 scrape_configs:
   - job_name: 'prometheus'
@@ -10,75 +10,23 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-#  - job_name: linux
-#    static_configs:
-#      - targets:
-#        {% for vm in vms %}
-#       - {{ vm }}:9100
-#       {% endfor %}
-
   - job_name: grafana
     static_configs:
       - targets:
         {% for vm in groups['grafana'] %}
-        - {{ vm }}:3001
+        - '{{ vm }}:{{ grafana_port }}'
         {% endfor %}
-
-  - job_name: bind9
+      
+{% for exporter in exporters %}
+  - job_name: {{ exporter.endpoint }}
     static_configs:
       - targets:
-        {% for vm in groups['dns_servers'] %}
-        - {{ vm }}:9119
-        {% endfor %}
-
-  - job_name: mysql-exporter
-    static_configs:
-      - targets:
-        {% for vm in groups['db_servers'] %}
-        - {{ vm }}:9104
-        {% endfor %}
-
-  - job_name: nginx
-    static_configs:
-      - targets:
-        {% for vm in groups['all'] %}
-        - {{ vm }}:9113
-        {% endfor %}
-
-  - job_name: node_exporter
-    static_configs:
-      - targets:
-        {% for vm in groups['all'] %}
-        - {{ vm }}:9100
-        {% endfor %}
-
-  - job_name: influxdb&telegraph
-    static_configs:
-      - targets:
-        {% for vm in groups['influxdb'] %}
-        - {{ vm }}:8086
-        {% endfor %}
-
-  - job_name: influxdb_exporter
-    static_configs:
-      - targets:
-        {% for vm in groups['influxdb_stats_exporter'] %}
-        - {{ vm }}:9424
-        {% endfor %}
-
-  - job_name: keepalived_exporter
-    static_configs:
-        - targets:
-          {% for vm in groups['loadbalancer'] %}
-          - '{{ vm }}:{{ keepalived_exporter_port}}'
-          {% endfor %}
-
-  - job_name: haproxy_exporter
-    static_configs:
-      - targets:
-        {% for vm in groups['loadbalancer'] %}
-         - '{{ vm }}:{{ haproxy_exporter_port}}'  
-        {% endfor %}
-
-
+{% for i in range(groups[exporter.groups]|length) %}
+{% if exporter.name == 'influxdb' %}
+        - "{{ exporter.name }}:{{ exporter.port }}"
+{% else %}
+        - "{{ exporter.name }}{{ i+1 }}:{{ exporter.port }}"
+{% endif %}
+{% endfor %}
+{% endfor %}
 

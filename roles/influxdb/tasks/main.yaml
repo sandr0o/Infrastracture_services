@@ -8,23 +8,14 @@
   apt:
      name: influxdb
 
-- name: InfluxDB is started automatically
-  service:
-    name: influxdb
-    state: started
-    enabled: yes
-
 - name: Install telegraf package
   apt:
     name: telegraf
   notify:
     - reload daemon telegraf
 
-- name: Telegraf is started automatically
-  service:
-    name: telegraf
-    state: started
-    enabled: yes
+- name: Execute handlers
+  meta: flush_handlers
 
 - name: Copy influxb.conf.j2
   template:
@@ -39,3 +30,15 @@
     dest: /etc/telegraf/telegraf.conf
   notify:
     - Restart telegraf
+
+- name: Telegraf is started automatically
+  service:
+    name: telegraf
+    state: started
+    enabled: yes
+
+- name: InfluxDB is started automatically
+  service:
+    name: influxdb
+    state: started
+    enabled: yes

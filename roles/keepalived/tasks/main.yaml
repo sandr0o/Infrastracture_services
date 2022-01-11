@@ -21,6 +21,7 @@
   service:
     name: keepalived
     state: started
+    enabled: yes
 
 - name: Download keepalived exporter and unarchive
   unarchive:

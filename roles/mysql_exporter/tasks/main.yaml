@@ -17,6 +17,7 @@
   template:
     src: my.cnf.j2
     dest: /var/lib/prometheus/.my.cnf
+  no_log: true
   notify: 
     - Restart mysql
     - Restart mysql_exporter

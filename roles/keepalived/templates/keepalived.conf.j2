@@ -16,7 +16,7 @@ vrrp_instance agama {
         192.168.100.{{ (hostvars['sandr0o-2']['ansible_default_ipv4']['address'] | split('.'))[3] }}/24
     }
     unicast_peer {
-        {% for vm in groups["agama"] %}
+        {% for vm in groups["keepalived"] %}
         {% if vm != inventory_hostname %}
         {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
         {% endif %}

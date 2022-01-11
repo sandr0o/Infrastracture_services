@@ -12,6 +12,7 @@
   template:
     src: grafana.ini.j2
     dest: /opt/grafana/grafana.ini
+  no_log: true
   notify: Restart grafana docker
 
 - name: Template datasource.yaml to grafana
@@ -24,15 +25,17 @@
   template:
     src: dashboard.yaml
     dest: /opt/grafana/provisioning/dashboards/dashboard.yaml
+  notify: Restart grafana docker
 
 - name: Copy grafana dashboards
   copy:
     src: "{{ item }}.json"
     dest: "/opt/grafana/provisioning/dashboards/{{ item }}.json"
   loop:
-    - syslog
+    - rsyslog
     - mysql
     - main
+  notify: Restart grafana docker
 
 - name: Grafana Docker container
   community.docker.docker_container:

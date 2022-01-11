@@ -21,6 +21,7 @@
   community.mysql.mysql_db:
     name: "{{ mysql_database }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
 
 - name: MySQL user
   community.mysql.mysql_user:
@@ -29,6 +30,8 @@
     host: "%" 
     priv: "{{ mysql_database }}.*:ALL"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+
 
 - name: Create user exporter
   community.mysql.mysql_user:
@@ -37,6 +40,8 @@
     priv:
       '*.*': 'PROCESS,REPLICATION CLIENT,SELECT'
     login_unix_socket: /var/run/mysqld/mysqld.sock 
+  no_log: true
+
  
 - name: Create MySQL replication user
   mysql_user:

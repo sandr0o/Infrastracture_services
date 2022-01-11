@@ -1,187 +1,134 @@
 ---
+
 - name: Collect info about all VMs
   hosts: all
   gather_facts: yes
+  become: yes
   tasks:
     - setup:
 
 - name: Init
-  hosts: all
-  gather_facts: no
+  hosts: init
   become: yes
   roles:
     - init
-    - backup
-  tags:
-    - init
-    - backup
 
-- name: iptables
-  hosts: all
-  gather_facts: no
+- name: Backup
+  hosts: backup
+  become: yes
+  roles:
+    - backup 
+
+- name: IPtables
+  hosts: iptables
   become: yes
   roles:
     - iptables
 
 - name: Bind9 DNS server
-  hosts: dns_server
-  gather_facts: no
+  hosts: dns_servers
   become: yes
   roles:
     - bind
-  tags:
-    - bind
-    - exporter
-    - grafana
-    - webserver
 
-- name: Docker instances
-  hosts: all
-  gather_facts: no
-  become: yes
-  roles:
-    - docker
-  tags:
-    - docker
-
-- name: Install nginx on all machines
-  hosts: all
-  gather_facts: no
-  become: yes
-  roles:
-    - nginx
-  tags:
-    - exporter
-    - webserver
-
-- name: upload rsyslog conf
-  hosts: all
-  gather_facts: no
-  become: yes
-  roles:
-    - rsyslog
-  tags:
-    - rsyslog
-
-- name: Database server
+- name: MySQL database server
   hosts: db_servers
-  gather_facts: no
   become: yes
   roles:
     - mysql
     - mysql_backup
-  tags:
-    - mysql
-    - backup
-    - webserver
-    - db
 
-- name: Ansible webservers 
-  hosts: agama
-  gather_facts: no
+- name: Docker
+  hosts: docker
+  become: yes
+  roles:
+    - docker
+
+- name: Nginx
+  hosts: nginx
+  become: yes
+  roles:
+    - nginx
+
+- name: Agama web server
+  hosts: web_servers
   become: yes
   roles:
     - agama
     - uwsgi
-  tags:
-    - agama
-    - webserver
 
-- name: Install and configure prometheus-node-exporter
-  hosts: all
-  gather_facts: no
-  become: yes
-  roles:
-    - node_exporter
-  tags:
-    - exporter
-
-- name: Install and configure prometheus
+- name: Prometheus
   hosts: prometheus
-  gather_facts: no
   become: yes
   roles:
     - prometheus
-  tags:
-    - prometheus
-    - grafana
 
-- name: Install and configure bind-exporter
-  hosts: dns_server
-  gather_facts: no
-  become: yes
-  roles:
-    - bind_exporter
-  tags:
-    - exporter
-
-- name: Install and configure mysqld-exporter
-  hosts: mysqld_exporter
-  gather_facts: no
-  become: yes
-  roles:
-    - mysql_exporter
-  tags:
-    - exporter
-
-- name: Install and configure nginx-exporter
-  hosts: nginx_exporter
-  gather_facts: no
-  become: yes
-  roles:
-    - nginx_exporter
-  tags:
-    - exporter
-
-- name: Install and configure grafana
-  hosts: grafana
-  gather_facts: no
-  become: yes
-  roles:
-    - grafana
-  tags:
-    - grafana
-    - g
-
-- name: Install and configure influxdb
-  hosts: influx_db
-  gather_facts: no
+- name: InfluxDB and Telegraf
+  hosts: influxdb
   become: yes
   roles:
     - influxdb
     - influxdb_backup
-  tags:
-    - influx
-    - backup
-    - grafana
-    - db
 
-- name: Create pinger and configure it
-  hosts: influx_db
-  gather_facts: no
+- name: Pinger
+  hosts: pinger
   become: yes
   roles:
     - pinger
-  tags:
-    - pinger
-    - grafana
 
-- name: Create influxdb_stats_exporter
-  hosts: influx_db
-  gather_facts: no
+- name: Rsyslog
+  hosts: rsyslog
   become: yes
   roles:
-    - influxdb_exporter
-  tags:
-    - influxdb_exporter
-    - exporter
+    - rsyslog
 
-- name: Install and configure loadbalancer
-  hosts: loadbalancer
-  gather_facts: yes
+- name: Haproxy
+  hosts: haproxy
+  become: yes
+  roles:
+    - haproxy
+
+- name: Keepalived
+  hosts: keepalived
   become: yes
   roles:
     - keepalived
-    - haproxy
-  tags:
-    - balancer
+
+- name: VM1 exporters
+  hosts: vm1_exporters
+  become: yes
+  roles:
+    - node_exporter 
+    - nginx_exporter 
+    - bind_exporter 
+    - mysql_exporter
+
+- name: VM2 exporters
+  hosts: vm2_exporters
+  become: yes
+  roles:
+    - node_exporter 
+    - nginx_exporter 
+    - bind_exporter 
+    - mysql_exporter 
+
+- name: VM3 exporters
+  hosts: vm3_exporters
+  become: yes
+  roles:
+    - node_exporter 
+    - nginx_exporter 
+    - bind_exporter 
+    - influxdb_exporter
+
+- name: Grafana
+  hosts: grafana
+  become: yes
+  roles:
+    - grafana
+
+- name: Rsyslog Slaves
+  hosts: rsyslog_slaves
+  become: yes
+  roles:
+    - rsyslog

@@ -36,6 +36,8 @@ backup_pass: !vault |
           3334323066383063330a393631346662383266663861306336643135623835303230376661663464
           6262
 
+prometheus_user: prometheus
+
 replication_user: replication
 replication_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
@@ -54,6 +56,7 @@ forwarders:
 allowed:
   - 192.168.42.0/24;
   - 127.0.0.0/8;
+  - 172.17.0.0/16;
 
 startup: luntik.sc
 
@@ -61,9 +64,10 @@ backupserver: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSne71MCp6CQCHURWe3CLud6vPDkLfL83Oab/giAI7O
 # ssh-ed25519
 
-port1: 17322
+port1: 2522
 
 domainName: luntik.sc
+zone: db.luntik.sc
 
 vms:
   - sandr0o-1
@@ -77,6 +81,8 @@ agama_port: 8001
 nginx_port: 8080
 pinger_port: 8086
 prometheus_port: 9090
+influxdb_port: 8086
+haproxy_port: 88
 
 keepalived_interface: ens3
 keepalived_virtual_id: 13
@@ -91,38 +97,38 @@ influxdb_exporter_port: 9424
 keepalived_exporter_port: 9165
 haproxy_exporter_port: 9101
 
-dns_transfer: !vault |
+dns_transfer_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
-          36623532643862393333373339636539353837633361306139643064383761313963343538333065
-          3166643039306336643562613834303466373661333538330a333066383164663639333835353331
-          34653330653230613438323338623233353833343863623862373461623730346165663264663038
-          3136643462626439620a393030666664376431396337353138366232343737333531633363393437
-          38383035363165363266333965623261653562343065643861366432363832383561393332646533
-          3834663662333966353664636336383565653064393731396566
+          65386130666337646238616534616334313039666363393836366262363932303137306437316163
+          3230333663643533366132656565383134616563326131380a663934663061363864383733386233
+          63363665636363636639346162386561396463326232663534393561366235363833636338333033
+          6332376634653961300a323935656633633764303632613930653132616337343834306465613737
+          61623031313031383965613633326565643730663566346231363537366665353830346462326562
+          3062353262336536356361393565613237333738373064643731
 
-dns_update: !vault |
+dns_update_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
-          35623131326165343231613337393138333037333963376435306433363037373038353333616132
-          6666393632316631376334306262316435323566343639390a333734323163623132303134326366
-          33313733323633623765303038303836623935336332633865633536356637303662366161616232
-          3439623965376436640a363233333934646431366664383636623938613833646462626365623964
-          65316636366365303636366435643031666432363066326462393361363761363065356430346235
-          3462326334323462373963633766323066633038376561623362
+          37666462346463313638636334646536646364343562643562393665356134613434343837643334
+          3462326162313838383630356239323332303336303235300a663238353065336433396635623231
+          61393764373262376430303230326163383033663333333861336236323565313132383062313665
+          6232353733386638380a613263303531323562656138653563333962383762646532643362653634
+          33396533313631363838356432316139336561623834356461643362396262373232643534633637
+          3231656233303034623530636639663439383235393134353639
 
 dns_cname_records:
   grafana: "{{ groups['grafana'][0] }}"
-  influxdb: "{{ groups['influxdb'][0] }}"
   prometheus: "{{ groups['prometheus'][0] }}"
-  web1: "{{ groups['all'][0] }}"
-  web2: "{{ groups['all'][1] }}"
-  #web3: "{{ groups['all'][2] }}"
+  influxdb: "{{ groups['influxdb'][0] }}"
+  web1: "{{ groups['nginx'][0] }}"
+  web2: "{{ groups['nginx'][1] }}"
+  web3: "{{ groups['nginx'][2] }}"
   lb1: "{{ groups['web_servers'][0] }}"
   lb2: "{{ groups['web_servers'][1] }}"
   mysql1: "{{ groups['db_servers'][0] }}"
   mysql2: "{{ groups['db_servers'][1] }}"
   ns1: "{{ groups['dns_servers'][0] }}"
   ns2: "{{ groups['dns_servers'][1] }}"
-  #ns3: "{{ groups['dns_servers'][2] }}"
+  ns3: "{{ groups['dns_servers'][2] }}"
 
 dns_a_records:
   backup: 192.168.42.132
@@ -135,3 +141,41 @@ vm0: sandr0o
 vm1: sandr0o-1
 vm2: sandr0o-2
 vm3: sandr0o-3
+
+agama_container_per_vm: 2
+keepalived_interface: ens3
+keepalived_virtual_id: 13
+keepalived_master_priority: 100
+keepalived_slave_priority: 99
+
+exporters:
+  - endpoint: "mysql-metrics"
+    port: 9104
+    groups: "db_servers"
+    name: mysql
+  - endpoint: "bind-metrics"
+    port: 9119
+    groups: "dns_servers"
+    name: ns
+  - endpoint: "node-metrics"
+    port: 9100
+    groups: "all"
+    name: sandr0o-
+  - endpoint: "nginx-metrics"
+    port: 9113
+    groups: "nginx"
+    name: web
+  - endpoint: "keepalived-metrics"
+    port: 9165
+    groups: "keepalived"
+    name: lb
+  - endpoint: "haproxy-metrics"
+    port: 9101
+    groups: "haproxy"
+    name: lb
+  - endpoint: "influxdb-metrics"
+    port: 9424
+    groups: "influxdb"
+    name: influxdb
+
+

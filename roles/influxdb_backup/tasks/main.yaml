@@ -2,7 +2,7 @@
   file:
     path: /home/backup/influxdb
     state: directory
-    owner: backup
+    owner: "{{backup_user}}"
     mode: 0744
 
 - name: Template influxdb-backup

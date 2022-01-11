@@ -2,8 +2,8 @@
   file:
     path: /home/backup/{{ item }}
     state: directory
-    owner: backup
-    group: backup
+    owner: "{{backup_user}}"
+    group: "{{backup_user}}"
     mode: '0755'
   loop:
     - backup

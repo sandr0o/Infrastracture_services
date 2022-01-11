@@ -23,8 +23,8 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 12433,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1638357629665,
+  "id": 2,
+  "iteration": 1634905185297,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -33,7 +33,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "influxdb:telegraf",
+      "datasource": "InfluxDB-telegraf",
       "decimals": 0,
       "fill": 1,
       "fillGradient": 0,
@@ -67,7 +67,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.2.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -625,7 +625,7 @@
       }
     },
     {
-      "datasource": "influxdb:telegraf",
+      "datasource": "InfluxDB-telegraf",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -773,11 +773,11 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Time"
+            "displayName": "severity_code"
           }
         ]
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "groupBy": [
@@ -851,7 +851,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 32,
+  "schemaVersion": 31,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -863,7 +863,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "influxdb:telegraf",
+        "datasource": "InfluxDB-telegraf",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=appname",
         "description": null,
         "error": null,
@@ -890,7 +890,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "influxdb:telegraf",
+        "datasource": "InfluxDB-telegraf",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=hostname",
         "description": null,
         "error": null,
@@ -917,7 +917,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "influxdb:telegraf",
+        "datasource": "InfluxDB-telegraf",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=severity",
         "description": null,
         "error": null,
@@ -988,5 +988,5 @@
   "timezone": "",
   "title": "Syslog",
   "uid": "TIYeHqRgZ",
-  "version": 1
+  "version": 2
 }
