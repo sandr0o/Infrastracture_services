@@ -13,11 +13,10 @@
     The last step will recover the database and drop the old one.
     
     1. sudo su - backup
-    2. duplicity --no-encryption restore rsync://sandr0o@backup//home/sandr0o/mysql/home/backup/restore/agama
+    2. duplicity --no-encryption restore rsync://sandr0o@backup//home/sandr0o/mysql /home/backup/restore/agama
     3. exit
     4. sudo su -
     5. mysql agama < /home/backup/restore/agama
-    ##works
 
 ## Restore InfluxDB data from the backup:
 
@@ -27,11 +26,11 @@
     In step 7, we restore the EMPTY database with the file that we downlaoded, then start the telegraf service in the last step.
 
     1. sudo su - backup
-    2. duplicity --no-encryption restore rsync://sandr0o@backup//home/sandr0o/influxdb/home/backup/influxdb/
-    3. exit
-    4. sudo su -
-    5. service telegraf stop
-    6. influx -execute 'DROP DATABASE telegraf'
-    7. influxd restore -portable -database telegraf /home/backup/influxdb
-    8. service telegraf start
-    ##works
+    2. rm -r /home/backup/restore/*
+    3. duplicity --no-encryption restore rsync://sandr0o@backup//home/sandr0o/influxdb /home/backup/influxdb/
+    4. exit
+    5. sudo su -
+    6. service telegraf stop
+    7. influx -execute 'DROP DATABASE telegraf'
+    8. influxd restore -portable -database telegraf /home/backup/influxdb
+    9. service telegraf start
