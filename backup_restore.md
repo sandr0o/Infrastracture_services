@@ -7,29 +7,6 @@
 
     If you know the issue is with the backup, it is mandatory to first run the backup step (mentioned on the bottom) and only after you should run the play!
 
-### Install/Restore with tags
-
-    Keeping the order is necessary!
-
-    ansible-playbook infra-yaml --tags init
-    It will create a backup and update cache
-
-    ansible-playbook infra-yaml --tags webserver
-    It will run the plays that are required for the webserver to run
-
-    ansible-playbook infra-yaml --tags exporter
-    It will run the plays in order to exporters work
-
-    ansible-playbook infra-yaml --tags grafana
-    It will run all the necessary plays in order to grafana and its provisioning to work
-
-    + ONLY DNS can be fixed with the following play, but it is included to webserver as well:
-    ansible-playbook infra-yaml --tags bind
-
-    + You can restore on database servers with the following command:
-    ansible-playbook infra-yaml --tags db
-
-
 ## Restore MySQL data from the backup:
     Since backup user is not configured properly, the easiest way is to first login to the user backup, then use duplicity to get
     the backup from the remote server. The tail command will ensure you, that the backup exist and we can use it.

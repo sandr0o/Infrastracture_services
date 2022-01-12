@@ -95,22 +95,13 @@
     - keepalived
 
 - name: VM1 exporters
-  hosts: vm1_exporters
+  hosts: vm1&2_exporters
   become: yes
   roles:
     - node_exporter 
     - nginx_exporter 
     - bind_exporter 
     - mysql_exporter
-
-- name: VM2 exporters
-  hosts: vm2_exporters
-  become: yes
-  roles:
-    - node_exporter 
-    - nginx_exporter 
-    - bind_exporter 
-    - mysql_exporter 
 
 - name: VM3 exporters
   hosts: vm3_exporters
