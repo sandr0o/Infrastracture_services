@@ -20,4 +20,3 @@ datasources:
    database: telegraf
    editable: true
 
-
