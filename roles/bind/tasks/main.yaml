@@ -35,6 +35,7 @@
   template: 
     src: resolv.conf.j2
     dest: /etc/resolv.conf
+  no_log: true
   notify: 
     - resolve directory
     - systemd/resolve
@@ -50,6 +51,7 @@
   template: 
     src: named.conf.local.j2
     dest: /etc/bind/named.conf.local
+  no_log: true
   notify: 
     - Restart bind9
     - rndc reload
@@ -58,6 +60,7 @@
   template: 
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
+  no_log: true
   notify: 
     - Restart bind9
     - rndc reload
