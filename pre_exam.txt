@@ -1,3 +1,1757 @@
++ date
++ exec
+++ tee -ia pre_exam.txt
++ hostname
+sandro
++ ansible-playbook infra.yaml --diff
+[WARNING]: Invalid characters were found in group names but not replaced, use
+-vvvv to see details
+
+PLAY [Collect info about all VMs] **********************************************
+[WARNING]: While constructing a mapping from
+/home/sxarti/Documents/ica0002/group_vars/all.yaml, line 1, column 1, found a
+duplicate dict key (keepalived_interface). Using last defined value only.
+[WARNING]: While constructing a mapping from
+/home/sxarti/Documents/ica0002/group_vars/all.yaml, line 1, column 1, found a
+duplicate dict key (keepalived_virtual_id). Using last defined value only.
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+
+TASK [setup] *******************************************************************
+ok: [sandr0o-2]
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+
+PLAY [Init] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-2]
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+
+TASK [init : Update APT cache] *************************************************
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+changed: [sandr0o-3]
+
+PLAY [Backup] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+ok: [sandr0o-3]
+
+TASK [backup : Create directories for backup&restore] **************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 34,
++    "owner": 34,
+     "path": "/home/backup/backup",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-1] => (item=backup)
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 34,
++    "owner": 34,
+     "path": "/home/backup/backup",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-3] => (item=backup)
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 34,
++    "owner": 34,
+     "path": "/home/backup/backup",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-2] => (item=backup)
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 34,
++    "owner": 34,
+     "path": "/home/backup/restore",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-1] => (item=restore)
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 34,
++    "owner": 34,
+     "path": "/home/backup/restore",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-2] => (item=restore)
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 34,
++    "owner": 34,
+     "path": "/home/backup/restore",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-3] => (item=restore)
+
+TASK [backup : Create user for backup] *****************************************
+changed: [sandr0o-3]
+changed: [sandr0o-2]
+changed: [sandr0o-1]
+
+TASK [backup : Install duplicity] **********************************************
+The following additional packages will be installed:
+  librsync2 python3-bcrypt python3-fasteners python3-future python3-lockfile
+  python3-monotonic python3-paramiko
+Suggested packages:
+  python3-boto ncftp lftp tahoe-lafs python3-swiftclient python3-pip par2
+  python-future-doc python-lockfile-doc python3-gssapi
+The following NEW packages will be installed:
+  duplicity librsync2 python3-bcrypt python3-fasteners python3-future
+  python3-lockfile python3-monotonic python3-paramiko
+0 upgraded, 8 newly installed, 0 to remove and 142 not upgraded.
+changed: [sandr0o-2]
+The following additional packages will be installed:
+  librsync2 python3-bcrypt python3-fasteners python3-future python3-lockfile
+  python3-monotonic python3-paramiko
+Suggested packages:
+  python3-boto ncftp lftp tahoe-lafs python3-swiftclient python3-pip par2
+  python-future-doc python-lockfile-doc python3-gssapi
+The following NEW packages will be installed:
+  duplicity librsync2 python3-bcrypt python3-fasteners python3-future
+  python3-lockfile python3-monotonic python3-paramiko
+0 upgraded, 8 newly installed, 0 to remove and 142 not upgraded.
+changed: [sandr0o-1]
+The following additional packages will be installed:
+  librsync2 python3-bcrypt python3-fasteners python3-future python3-lockfile
+  python3-monotonic python3-paramiko
+Suggested packages:
+  python3-boto ncftp lftp tahoe-lafs python3-swiftclient python3-pip par2
+  python-future-doc python-lockfile-doc python3-gssapi
+The following NEW packages will be installed:
+  duplicity librsync2 python3-bcrypt python3-fasteners python3-future
+  python3-lockfile python3-monotonic python3-paramiko
+0 upgraded, 8 newly installed, 0 to remove and 142 not upgraded.
+changed: [sandr0o-3]
+
+TASK [backup : Template backup-server-ssh-key to known hosts] ******************
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp6imopdjo/known_hosts.j2
+@@ -0,0 +1,6 @@
++backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
++backup.luntik.sc ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
++
++
++
++
+
+changed: [sandr0o-1]
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpleg3_od7/known_hosts.j2
+@@ -0,0 +1,6 @@
++backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
++backup.luntik.sc ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
++
++
++
++
+
+changed: [sandr0o-2]
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpwboantq9/known_hosts.j2
+@@ -0,0 +1,6 @@
++backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
++backup.luntik.sc ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
++
++
++
++
+
+changed: [sandr0o-3]
+
+PLAY [IPtables] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+
+TASK [iptables : Install iptables-persistent] **********************************
+The following additional packages will be installed:
+  netfilter-persistent
+The following NEW packages will be installed:
+  iptables-persistent netfilter-persistent
+0 upgraded, 2 newly installed, 0 to remove and 142 not upgraded.
+changed: [sandr0o-2]
+The following additional packages will be installed:
+  netfilter-persistent
+The following NEW packages will be installed:
+  iptables-persistent netfilter-persistent
+0 upgraded, 2 newly installed, 0 to remove and 142 not upgraded.
+changed: [sandr0o-1]
+The following additional packages will be installed:
+  netfilter-persistent
+The following NEW packages will be installed:
+  iptables-persistent netfilter-persistent
+0 upgraded, 2 newly installed, 0 to remove and 142 not upgraded.
+changed: [sandr0o-3]
+
+TASK [iptables : fix ssl handshake docker] *************************************
+--- before: /etc/iptables/rules.v4
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpsatqr_m2/iptables.mangle.j2
+@@ -1,7 +1,11 @@
+-# Generated by iptables-save v1.8.4 on Thu Jan 13 12:51:09 2022
+-*filter
++*mangle
++:PREROUTING ACCEPT [0:0]
+ :INPUT ACCEPT [0:0]
+ :FORWARD ACCEPT [0:0]
+ :OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++-A POSTROUTING -o ens3 -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1400 --clamp-mss-to-pmtu
+ COMMIT
+-# Completed on Thu Jan 13 12:51:09 2022
++
++
++
+
+changed: [sandr0o-2]
+--- before: /etc/iptables/rules.v4
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp6klf109t/iptables.mangle.j2
+@@ -1,7 +1,11 @@
+-# Generated by iptables-save v1.8.4 on Thu Jan 13 12:51:09 2022
+-*filter
++*mangle
++:PREROUTING ACCEPT [0:0]
+ :INPUT ACCEPT [0:0]
+ :FORWARD ACCEPT [0:0]
+ :OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++-A POSTROUTING -o ens3 -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1400 --clamp-mss-to-pmtu
+ COMMIT
+-# Completed on Thu Jan 13 12:51:09 2022
++
++
++
+
+changed: [sandr0o-1]
+--- before: /etc/iptables/rules.v4
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpyxsecbm6/iptables.mangle.j2
+@@ -1,7 +1,11 @@
+-# Generated by iptables-save v1.8.4 on Thu Jan 13 12:51:09 2022
+-*filter
++*mangle
++:PREROUTING ACCEPT [0:0]
+ :INPUT ACCEPT [0:0]
+ :FORWARD ACCEPT [0:0]
+ :OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++-A POSTROUTING -o ens3 -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1400 --clamp-mss-to-pmtu
+ COMMIT
+-# Completed on Thu Jan 13 12:51:09 2022
++
++
++
+
+changed: [sandr0o-3]
+
+TASK [iptables : Sleep for 10 seconds and continue with play] ******************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+ok: [sandr0o-3]
+
+TASK [iptables : Check if  iptables-persistent (netfilter-persistent) is started and if it is not, start it] ***
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+
+TASK [iptables : load iptable-mangle config] ***********************************
+[WARNING]: Attempts to restore iptables state without rollback in case of
+mistake may lead the ansible controller to loose access to the hosts and never
+regain it before fixing firewall rules through a serial console, or any other
+way except SSH. Please set task attribute 'poll' (=15) to 0, and 'async' (=0)
+to a value >2 and not greater than 'ansible_timeout' (=10) (recommended).
+[WARNING]: Attempts to restore iptables state without rollback in case of
+mistake may lead the ansible controller to loose access to the hosts and never
+regain it before fixing firewall rules through a serial console, or any other
+way except SSH. Please set task attribute 'poll' (=15) to 0, and 'async' (=0)
+to a value >2 and not greater than 'ansible_timeout' (=10) (recommended).
+[WARNING]: Attempts to restore iptables state without rollback in case of
+mistake may lead the ansible controller to loose access to the hosts and never
+regain it before fixing firewall rules through a serial console, or any other
+way except SSH. Please set task attribute 'poll' (=15) to 0, and 'async' (=0)
+to a value >2 and not greater than 'ansible_timeout' (=10) (recommended).
+changed: [sandr0o-3]
+changed: [sandr0o-2]
+changed: [sandr0o-1]
+
+PLAY [Bind9 DNS server] ********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+
+TASK [bind : Install 'bind9'] **************************************************
+The following additional packages will be installed:
+  bind9-dnsutils bind9-libs bind9-utils dns-root-data python3-ply
+Suggested packages:
+  bind-doc resolvconf python-ply-doc
+The following NEW packages will be installed:
+  bind9 bind9-utils dns-root-data python3-ply
+The following packages will be upgraded:
+  bind9-dnsutils bind9-libs
+2 upgraded, 4 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-2]
+The following additional packages will be installed:
+  bind9-dnsutils bind9-libs bind9-utils dns-root-data python3-ply
+Suggested packages:
+  bind-doc resolvconf python-ply-doc
+The following NEW packages will be installed:
+  bind9 bind9-utils dns-root-data python3-ply
+The following packages will be upgraded:
+  bind9-dnsutils bind9-libs
+2 upgraded, 4 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-3]
+The following additional packages will be installed:
+  bind9-dnsutils bind9-libs bind9-utils dns-root-data python3-ply
+Suggested packages:
+  bind-doc resolvconf python-ply-doc
+The following NEW packages will be installed:
+  bind9 bind9-utils dns-root-data python3-ply
+The following packages will be upgraded:
+  bind9-dnsutils bind9-libs
+2 upgraded, 4 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-1]
+
+TASK [bind : Install 'python3-dnspython'] **************************************
+The following NEW packages will be installed:
+  python3-dnspython
+0 upgraded, 1 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-2]
+The following NEW packages will be installed:
+  python3-dnspython
+0 upgraded, 1 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-1]
+The following NEW packages will be installed:
+  python3-dnspython
+0 upgraded, 1 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-3]
+
+TASK [bind : Ensure directory /var/cache/bind is created] **********************
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+
+TASK [bind : Upload db.luntik.sc to /var/cache/bind/] **************************
+skipping: [sandr0o-1]
+skipping: [sandr0o-2]
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpo9vamae4/db.luntik.sc.j2
+@@ -0,0 +1,18 @@
++$TTL	604800
++luntik.sc. IN SOA sandr0o-3.luntik.sc. db.luntik.sc. (
++			      2		; Serial
++			 604800		; Refresh
++			  86400		; Retry
++			2419200		; Expire
++			 604800 )	; Negative Cache TTL
++;
++
++luntik.sc. IN NS sandr0o-3
++luntik.sc. IN NS sandr0o-1
++luntik.sc. IN NS sandr0o-2
++
++sandr0o-1 IN A 192.168.42.112
++sandr0o-2 IN A 192.168.42.53
++sandr0o-3 IN A 192.168.42.144
++
++
+
+changed: [sandr0o-3]
+
+TASK [bind : Upload db.luntik.sc.reverse.j2 to /var/cache/bind/] ***************
+skipping: [sandr0o-1]
+skipping: [sandr0o-2]
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp8prd406m/db.luntik.sc.reverse.j2
+@@ -0,0 +1,17 @@
++$TTL	604800
++42.168.192.in-addr.arpa. IN SOA sandr0o-3.luntik.sc. db.luntik.sc. (
++			      2		; Serial
++			 604800		; Refresh
++			  86400		; Retry
++			2419200		; Expire
++			 604800 )	; Negative Cache TTL
++;
++
++42.168.192.in-addr.arpa. IN NS sandr0o-3.luntik.sc.
++42.168.192.in-addr.arpa. IN NS sandr0o-1.luntik.sc.
++42.168.192.in-addr.arpa. IN NS sandr0o-2.luntik.sc.
++112 IN PTR sandr0o-1.luntik.sc.
++53 IN PTR sandr0o-2.luntik.sc.
++144 IN PTR sandr0o-3.luntik.sc.
++
++
+
+changed: [sandr0o-3]
+
+TASK [bind : Template resolv.conf.j2 to /etc/resolv.conf & update resolve.conf.j2 to /run/systemd/resolve/] ***
+--- before: /etc/resolv.conf
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpjjdmnzj5/resolv.conf.j2
+@@ -1,19 +1,4 @@
+-# This file is managed by man:systemd-resolved(8). Do not edit.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients to the
+-# internal DNS stub resolver of systemd-resolved. This file lists all
+-# configured search domains.
+-#
+-# Run "resolvectl status" to see details about the uplink DNS servers
+-# currently in use.
+-#
+-# Third party programs must not access this file directly, but only through the
+-# symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a different way,
+-# replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.42.112
++nameserver 192.168.42.53
++search luntik.sc
+ 
+-nameserver 127.0.0.53
+-options edns0 trust-ad
+-search openstacklocal
+
+changed: [sandr0o-3]
+--- before: /etc/resolv.conf
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp_ia8t0fo/resolv.conf.j2
+@@ -1,19 +1,4 @@
+-# This file is managed by man:systemd-resolved(8). Do not edit.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients to the
+-# internal DNS stub resolver of systemd-resolved. This file lists all
+-# configured search domains.
+-#
+-# Run "resolvectl status" to see details about the uplink DNS servers
+-# currently in use.
+-#
+-# Third party programs must not access this file directly, but only through the
+-# symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a different way,
+-# replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.42.112
++nameserver 192.168.42.53
++search luntik.sc
+ 
+-nameserver 127.0.0.53
+-options edns0 trust-ad
+-search openstacklocal
+
+changed: [sandr0o-1]
+--- before: /etc/resolv.conf
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp9abvqlj1/resolv.conf.j2
+@@ -1,19 +1,4 @@
+-# This file is managed by man:systemd-resolved(8). Do not edit.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients to the
+-# internal DNS stub resolver of systemd-resolved. This file lists all
+-# configured search domains.
+-#
+-# Run "resolvectl status" to see details about the uplink DNS servers
+-# currently in use.
+-#
+-# Third party programs must not access this file directly, but only through the
+-# symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a different way,
+-# replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.42.112
++nameserver 192.168.42.53
++search luntik.sc
+ 
+-nameserver 127.0.0.53
+-options edns0 trust-ad
+-search openstacklocal
+
+changed: [sandr0o-2]
+
+TASK [bind : Stop service systemd-resolved] ************************************
+changed: [sandr0o-2]
+changed: [sandr0o-1]
+changed: [sandr0o-3]
+
+TASK [bind : Upload named.conf.local.j2 to /etc/bind/named.conf.local / local DNS server configuration] ***
+--- before: /etc/bind/named.conf.local
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp2husei2r/named.conf.local.j2
+@@ -1,8 +1,21 @@
+-//
+-// Do any local configuration here
+-//
++zone "luntik.sc" {
+ 
+-// Consider adding the 1918 zones here, if they are not used in your
+-// organization
+-//include "/etc/bind/zones.rfc1918";
++  type slave;
++  masters { 192.168.42.144; };
++  
++  file "db.luntik.sc";
++};
+ 
++server 192.168.42.144 {
++  keys {  dns_transfer_key; };
++};
++
++
++zone "42.168.192.in-addr.arpa" {
++  type slave;
++  masters { 192.168.42.144; };
++  
++  file "db.luntik.sc.reverse";
++  
++};
++
+
+changed: [sandr0o-1]
+--- before: /etc/bind/named.conf.local
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpahs6lf7w/named.conf.local.j2
+@@ -1,8 +1,21 @@
+-//
+-// Do any local configuration here
+-//
++zone "luntik.sc" {
+ 
+-// Consider adding the 1918 zones here, if they are not used in your
+-// organization
+-//include "/etc/bind/zones.rfc1918";
++  type slave;
++  masters { 192.168.42.144; };
++  
++  file "db.luntik.sc";
++};
+ 
++server 192.168.42.144 {
++  keys {  dns_transfer_key; };
++};
++
++
++zone "42.168.192.in-addr.arpa" {
++  type slave;
++  masters { 192.168.42.144; };
++  
++  file "db.luntik.sc.reverse";
++  
++};
++
+
+changed: [sandr0o-2]
+--- before: /etc/bind/named.conf.local
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp_avu3x29/named.conf.local.j2
+@@ -1,8 +1,20 @@
+-//
+-// Do any local configuration here
+-//
++zone "luntik.sc" {
+ 
+-// Consider adding the 1918 zones here, if they are not used in your
+-// organization
+-//include "/etc/bind/zones.rfc1918";
++  type master;
++  allow-update { key dns_update_key; };
++  allow-transfer { 127.0.0.1; key dns_transfer_key; };
+ 
++  file "db.luntik.sc";
++};
++
++
++
++zone "42.168.192.in-addr.arpa" {
++  type master;
++  allow-update { key dns_update_key; };
++  allow-transfer { 127.0.0.1; key dns_transfer_key; };
++
++  file "db.luntik.sc.reverse";
++  
++};
++
+
+changed: [sandr0o-3]
+
+TASK [bind : Upload named.conf.options.j2 to /etc/bind/] ***********************
+--- before: /etc/bind/named.conf.options
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp9f08ht5k/named.conf.options.j2
+@@ -1,24 +1,26 @@
++acl trustedclients {  192.168.42.0/24;  127.0.0.0/8;  172.17.0.0/16;  };
+ options {
+-	directory "/var/cache/bind";
++  directory "/var/cache/bind";
++        forwarders {
++          1.1.1.1;
++          8.8.8.8;
++          9.9.9.9;
++          9.9.9.10;
++                  };
++        dnssec-validation no;
++  allow-query { trustedclients; };
++};
+ 
+-	// If there is a firewall between you and nameservers you want
+-	// to talk to, you may need to fix the firewall to allow multiple
+-	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
++statistics-channels {
++  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
++};
+ 
+-	// If your ISP provided one or more IP addresses for stable 
+-	// nameservers, you probably want to use them as forwarders.  
+-	// Uncomment the following block, and insert the addresses replacing 
+-	// the all-0's placeholder.
++key "dns_transfer_key" {
++        algorithm hmac-sha256;
++        secret "3nEjc+6Y7YLnwMIN+v0YubyVhD0cDbTlSSnmAGMAtGw=";
++};
+ 
+-	// forwarders {
+-	// 	0.0.0.0;
+-	// };
+-
+-	//========================================================================
+-	// If BIND logs error messages about the root key being expired,
+-	// you will need to update your keys.  See https://www.isc.org/bind-keys
+-	//========================================================================
+-	dnssec-validation auto;
+-
+-	listen-on-v6 { any; };
++key "dns_update_key" {
++	algorithm hmac-sha256;
++	secret "u8iVvlBf/+ZJioxfiZFVs6hotZ/hVVKj7H3OmSJ26As=";
+ };
+
+changed: [sandr0o-2]
+--- before: /etc/bind/named.conf.options
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpd5nlrl_a/named.conf.options.j2
+@@ -1,24 +1,26 @@
++acl trustedclients {  192.168.42.0/24;  127.0.0.0/8;  172.17.0.0/16;  };
+ options {
+-	directory "/var/cache/bind";
++  directory "/var/cache/bind";
++        forwarders {
++          1.1.1.1;
++          8.8.8.8;
++          9.9.9.9;
++          9.9.9.10;
++                  };
++        dnssec-validation no;
++  allow-query { trustedclients; };
++};
+ 
+-	// If there is a firewall between you and nameservers you want
+-	// to talk to, you may need to fix the firewall to allow multiple
+-	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
++statistics-channels {
++  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
++};
+ 
+-	// If your ISP provided one or more IP addresses for stable 
+-	// nameservers, you probably want to use them as forwarders.  
+-	// Uncomment the following block, and insert the addresses replacing 
+-	// the all-0's placeholder.
++key "dns_transfer_key" {
++        algorithm hmac-sha256;
++        secret "3nEjc+6Y7YLnwMIN+v0YubyVhD0cDbTlSSnmAGMAtGw=";
++};
+ 
+-	// forwarders {
+-	// 	0.0.0.0;
+-	// };
+-
+-	//========================================================================
+-	// If BIND logs error messages about the root key being expired,
+-	// you will need to update your keys.  See https://www.isc.org/bind-keys
+-	//========================================================================
+-	dnssec-validation auto;
+-
+-	listen-on-v6 { any; };
++key "dns_update_key" {
++	algorithm hmac-sha256;
++	secret "u8iVvlBf/+ZJioxfiZFVs6hotZ/hVVKj7H3OmSJ26As=";
+ };
+
+changed: [sandr0o-1]
+--- before: /etc/bind/named.conf.options
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp1hby5xuq/named.conf.options.j2
+@@ -1,24 +1,26 @@
++acl trustedclients {  192.168.42.0/24;  127.0.0.0/8;  172.17.0.0/16;  };
+ options {
+-	directory "/var/cache/bind";
++  directory "/var/cache/bind";
++        forwarders {
++          1.1.1.1;
++          8.8.8.8;
++          9.9.9.9;
++          9.9.9.10;
++                  };
++        dnssec-validation no;
++  allow-query { trustedclients; };
++};
+ 
+-	// If there is a firewall between you and nameservers you want
+-	// to talk to, you may need to fix the firewall to allow multiple
+-	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
++statistics-channels {
++  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
++};
+ 
+-	// If your ISP provided one or more IP addresses for stable 
+-	// nameservers, you probably want to use them as forwarders.  
+-	// Uncomment the following block, and insert the addresses replacing 
+-	// the all-0's placeholder.
++key "dns_transfer_key" {
++        algorithm hmac-sha256;
++        secret "3nEjc+6Y7YLnwMIN+v0YubyVhD0cDbTlSSnmAGMAtGw=";
++};
+ 
+-	// forwarders {
+-	// 	0.0.0.0;
+-	// };
+-
+-	//========================================================================
+-	// If BIND logs error messages about the root key being expired,
+-	// you will need to update your keys.  See https://www.isc.org/bind-keys
+-	//========================================================================
+-	dnssec-validation auto;
+-
+-	listen-on-v6 { any; };
++key "dns_update_key" {
++	algorithm hmac-sha256;
++	secret "u8iVvlBf/+ZJioxfiZFVs6hotZ/hVVKj7H3OmSJ26As=";
+ };
+
+changed: [sandr0o-3]
+
+TASK [bind : Execute handlers preemptively] ************************************
+
+RUNNING HANDLER [bind : resolve directory] *************************************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+RUNNING HANDLER [bind : systemd/resolve] ***************************************
+--- before: /run/systemd/resolve/resolv.conf
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp9qsfz8gm/resolv.conf.j2
+@@ -1,15 +1,4 @@
+-# This file is managed by man:systemd-resolved(8). Do not edit.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients directly to
+-# all known uplink DNS servers. This file lists all configured search domains.
+-#
+-# Third party programs must not access this file directly, but only through the
+-# symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a different way,
+-# replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.42.112
++nameserver 192.168.42.53
++search luntik.sc
+ 
+-nameserver 1.1.1.1
+-nameserver 8.8.8.8
+-search openstacklocal
+
+changed: [sandr0o-2]
+--- before: /run/systemd/resolve/resolv.conf
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmply1xj_ec/resolv.conf.j2
+@@ -1,15 +1,4 @@
+-# This file is managed by man:systemd-resolved(8). Do not edit.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients directly to
+-# all known uplink DNS servers. This file lists all configured search domains.
+-#
+-# Third party programs must not access this file directly, but only through the
+-# symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a different way,
+-# replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.42.112
++nameserver 192.168.42.53
++search luntik.sc
+ 
+-nameserver 1.1.1.1
+-nameserver 8.8.8.8
+-search openstacklocal
+
+changed: [sandr0o-1]
+--- before: /run/systemd/resolve/resolv.conf
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpbmpgxs3p/resolv.conf.j2
+@@ -1,15 +1,4 @@
+-# This file is managed by man:systemd-resolved(8). Do not edit.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients directly to
+-# all known uplink DNS servers. This file lists all configured search domains.
+-#
+-# Third party programs must not access this file directly, but only through the
+-# symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a different way,
+-# replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.42.112
++nameserver 192.168.42.53
++search luntik.sc
+ 
+-nameserver 1.1.1.1
+-nameserver 8.8.8.8
+-search openstacklocal
+
+changed: [sandr0o-3]
+
+RUNNING HANDLER [bind : rndc reload] *******************************************
+changed: [sandr0o-2]
+changed: [sandr0o-3]
+changed: [sandr0o-1]
+
+RUNNING HANDLER [bind : Restart bind9] *****************************************
+changed: [sandr0o-3]
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+
+TASK [bind : Ensure bind9 is started] ******************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+
+TASK [bind : Set A records] ****************************************************
+changed: [sandr0o-3] => (item={'key': 'backup', 'value': '192.168.42.132'})
+changed: [sandr0o-3] => (item={'key': 'cloudfare', 'value': '1.1.1.1'})
+changed: [sandr0o-3] => (item={'key': 'google', 'value': '8.8.8.8'})
+changed: [sandr0o-3] => (item={'key': 'google2', 'value': '8.8.4.4'})
+
+TASK [bind : Set CNAME records] ************************************************
+changed: [sandr0o-3] => (item={'key': 'grafana', 'value': 'sandr0o-3'})
+changed: [sandr0o-3] => (item={'key': 'prometheus', 'value': 'sandr0o-3'})
+changed: [sandr0o-3] => (item={'key': 'influxdb', 'value': 'sandr0o-3'})
+changed: [sandr0o-3] => (item={'key': 'web1', 'value': 'sandr0o-1'})
+changed: [sandr0o-3] => (item={'key': 'web2', 'value': 'sandr0o-2'})
+changed: [sandr0o-3] => (item={'key': 'web3', 'value': 'sandr0o-3'})
+changed: [sandr0o-3] => (item={'key': 'lb1', 'value': 'sandr0o-1'})
+changed: [sandr0o-3] => (item={'key': 'lb2', 'value': 'sandr0o-2'})
+changed: [sandr0o-3] => (item={'key': 'mysql1', 'value': 'sandr0o-1'})
+changed: [sandr0o-3] => (item={'key': 'mysql2', 'value': 'sandr0o-2'})
+changed: [sandr0o-3] => (item={'key': 'ns1', 'value': 'sandr0o-3'})
+changed: [sandr0o-3] => (item={'key': 'ns2', 'value': 'sandr0o-1'})
+changed: [sandr0o-3] => (item={'key': 'ns3', 'value': 'sandr0o-2'})
+
+TASK [bind : Ensure bind9 is started] ******************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+
+PLAY [MySQL database server] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [mysql : Install mysql-server] ********************************************
+The following additional packages will be installed:
+  libcgi-fast-perl libcgi-pm-perl libencode-locale-perl libevent-core-2.1-7
+  libevent-pthreads-2.1-7 libfcgi-perl libhtml-parser-perl libhtml-tagset-perl
+  libhtml-template-perl libhttp-date-perl libhttp-message-perl libio-html-perl
+  liblwp-mediatypes-perl libmecab2 libtimedate-perl liburi-perl mecab-ipadic
+  mecab-ipadic-utf8 mecab-utils mysql-client-8.0 mysql-client-core-8.0
+  mysql-common mysql-server-8.0 mysql-server-core-8.0
+Suggested packages:
+  libdata-dump-perl libipc-sharedcache-perl libwww-perl mailx tinyca
+The following NEW packages will be installed:
+  libcgi-fast-perl libcgi-pm-perl libencode-locale-perl libevent-core-2.1-7
+  libevent-pthreads-2.1-7 libfcgi-perl libhtml-parser-perl libhtml-tagset-perl
+  libhtml-template-perl libhttp-date-perl libhttp-message-perl libio-html-perl
+  liblwp-mediatypes-perl libmecab2 libtimedate-perl liburi-perl mecab-ipadic
+  mecab-ipadic-utf8 mecab-utils mysql-client-8.0 mysql-client-core-8.0
+  mysql-common mysql-server mysql-server-8.0 mysql-server-core-8.0
+0 upgraded, 25 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-2]
+The following additional packages will be installed:
+  libcgi-fast-perl libcgi-pm-perl libencode-locale-perl libevent-core-2.1-7
+  libevent-pthreads-2.1-7 libfcgi-perl libhtml-parser-perl libhtml-tagset-perl
+  libhtml-template-perl libhttp-date-perl libhttp-message-perl libio-html-perl
+  liblwp-mediatypes-perl libmecab2 libtimedate-perl liburi-perl mecab-ipadic
+  mecab-ipadic-utf8 mecab-utils mysql-client-8.0 mysql-client-core-8.0
+  mysql-common mysql-server-8.0 mysql-server-core-8.0
+Suggested packages:
+  libdata-dump-perl libipc-sharedcache-perl libwww-perl mailx tinyca
+The following NEW packages will be installed:
+  libcgi-fast-perl libcgi-pm-perl libencode-locale-perl libevent-core-2.1-7
+  libevent-pthreads-2.1-7 libfcgi-perl libhtml-parser-perl libhtml-tagset-perl
+  libhtml-template-perl libhttp-date-perl libhttp-message-perl libio-html-perl
+  liblwp-mediatypes-perl libmecab2 libtimedate-perl liburi-perl mecab-ipadic
+  mecab-ipadic-utf8 mecab-utils mysql-client-8.0 mysql-client-core-8.0
+  mysql-common mysql-server mysql-server-8.0 mysql-server-core-8.0
+0 upgraded, 25 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-1]
+
+TASK [mysql : Install PyMySQL] *************************************************
+Suggested packages:
+  python-pymysql-doc
+The following NEW packages will be installed:
+  python3-pymysql
+0 upgraded, 1 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-2]
+Suggested packages:
+  python-pymysql-doc
+The following NEW packages will be installed:
+  python3-pymysql
+0 upgraded, 1 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-1]
+
+TASK [mysql : Sleep for 10 seconds and continue with play] *********************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : Template /etc/mysql/mysql.conf.d/override.cnf with override.cnf.j2] ***
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpl6uld35y/override.cnf.j2
+@@ -0,0 +1,7 @@
++[mysqld]
++bind-address = 0.0.0.0
++
++log-bin = /var/log/mysql/mysql-bin.log
++relay-log = /var/log/mysql/mysql-relay.log
++replicate-do-db = agama
++server-id = 112
+
+changed: [sandr0o-1]
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpmk1wttzg/override.cnf.j2
+@@ -0,0 +1,7 @@
++[mysqld]
++bind-address = 0.0.0.0
++
++log-bin = /var/log/mysql/mysql-bin.log
++relay-log = /var/log/mysql/mysql-relay.log
++replicate-do-db = agama
++server-id = 53
+
+changed: [sandr0o-2]
+
+TASK [mysql : MySQL database] **************************************************
+changed: [sandr0o-2]
+changed: [sandr0o-1]
+
+TASK [mysql : MySQL user] ******************************************************
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+
+TASK [mysql : Create user exporter] ********************************************
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+
+TASK [mysql : Create MySQL replication user] ***********************************
+changed: [sandr0o-2]
+changed: [sandr0o-1]
+
+TASK [mysql : Ensure mysql is started] *****************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [mysql : Set read only parameter] *****************************************
+changed: [sandr0o-2]
+changed: [sandr0o-1]
+
+TASK [mysql_backup : Ensure /home/backup/mysql directory is created] ***********
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "mode": "0755",
+-    "owner": 0,
++    "mode": "0744",
++    "owner": 34,
+     "path": "/home/backup/mysql",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-2]
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "mode": "0755",
+-    "owner": 0,
++    "mode": "0744",
++    "owner": 34,
+     "path": "/home/backup/mysql",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-1]
+
+TASK [mysql_backup : Grant privileges for user backup] *************************
+changed: [sandr0o-2]
+changed: [sandr0o-1]
+
+TASK [mysql_backup : Template mysql configuration file] ************************
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+
+TASK [mysql_backup : Template cron file] ***************************************
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpp1d14rwo/mysql-backup.j2
+@@ -0,0 +1,3 @@
++# 15 23
++# 30 23   6
++# 35 23   1-5
+\ No newline at end of file
+
+changed: [sandr0o-1]
+--- before
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmp5ph72rws/mysql-backup.j2
+@@ -0,0 +1,6 @@
++15 23 * * * backup mysqldump agama > /home/backup/mysql/agama.sql
++30 23 * * 6 backup duplicity full --no-encryption --allow-source-mismatch /home/backup/mysql/agama.sql rsync://sandr0o@backup//home/sandr0o/mysql/
++35 23 * * 1-5 backup duplicity incremental --no-encryption --allow-source-mismatch /home/backup/mysql/agama.sql rsync://sandr0o@backup//home/sandr0o/mysql/
++# 15 23
++# 30 23   6
++# 35 23   1-5
+\ No newline at end of file
+
+changed: [sandr0o-2]
+
+RUNNING HANDLER [mysql : Restart mysql] ****************************************
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+
+RUNNING HANDLER [mysql : Reset MySQL source] ***********************************
+skipping: [sandr0o-2] => (item=stopreplica) 
+skipping: [sandr0o-2] => (item=resetprimary) 
+ok: [sandr0o-1] => (item=stopreplica)
+changed: [sandr0o-1] => (item=resetprimary)
+
+RUNNING HANDLER [mysql : Reset MySQL replica] **********************************
+skipping: [sandr0o-1] => (item=None) 
+skipping: [sandr0o-1] => (item=None) 
+skipping: [sandr0o-1] => (item=None) 
+skipping: [sandr0o-1] => (item=None) 
+skipping: [sandr0o-1]
+ok: [sandr0o-2] => (item=None)
+changed: [sandr0o-2] => (item=None)
+changed: [sandr0o-2] => (item=None)
+changed: [sandr0o-2] => (item=None)
+changed: [sandr0o-2]
+
+RUNNING HANDLER [mysql_backup : Restart cron] **********************************
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+
+PLAY [Docker] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+
+TASK [docker : Install docker.io and python3-docker] ***************************
+The following additional packages will be installed:
+  bridge-utils containerd dnsmasq-base libidn11 pigz python3-websocket runc
+  ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-doc
+  rinse zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd dnsmasq-base docker.io libidn11 pigz python3-docker
+  python3-websocket runc ubuntu-fan
+0 upgraded, 10 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-3]
+The following additional packages will be installed:
+  bridge-utils containerd dnsmasq-base libidn11 pigz python3-websocket runc
+  ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-doc
+  rinse zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd dnsmasq-base docker.io libidn11 pigz python3-docker
+  python3-websocket runc ubuntu-fan
+0 upgraded, 10 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-2]
+The following additional packages will be installed:
+  bridge-utils containerd dnsmasq-base libidn11 pigz python3-websocket runc
+  ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-doc
+  rinse zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd dnsmasq-base docker.io libidn11 pigz python3-docker
+  python3-websocket runc ubuntu-fan
+0 upgraded, 10 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-1]
+
+TASK [docker : Ensure docker is running] ***************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+PLAY [Nginx] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [nginx : Install nginx] ***************************************************
+The following additional packages will be installed:
+  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
+  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
+  libwebp6 libxpm4 nginx-common nginx-core
+Suggested packages:
+  libgd-tools fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
+  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
+  libwebp6 libxpm4 nginx nginx-common nginx-core
+0 upgraded, 17 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-3]
+The following additional packages will be installed:
+  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
+  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
+  libwebp6 libxpm4 nginx-common nginx-core
+Suggested packages:
+  libgd-tools fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
+  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
+  libwebp6 libxpm4 nginx nginx-common nginx-core
+0 upgraded, 17 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-2]
+The following additional packages will be installed:
+  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
+  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
+  libwebp6 libxpm4 nginx-common nginx-core
+Suggested packages:
+  libgd-tools fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
+  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
+  libwebp6 libxpm4 nginx nginx-common nginx-core
+0 upgraded, 17 newly installed, 0 to remove and 140 not upgraded.
+changed: [sandr0o-1]
+
+TASK [nginx : Replace vm /etc/nginx/sites-enabled/default with nginx configuration as uWSGI frontend] ***
+--- before: /etc/nginx/sites-enabled/default
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpnxb3lf35/default.j2
+@@ -1,91 +1,67 @@
+-##
+-# You should look at the following URL's in order to grasp a solid understanding
+-# of Nginx configuration files in order to fully unleash the power of Nginx.
+-# https://www.nginx.com/resources/wiki/start/
+-# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+-# https://wiki.debian.org/Nginx/DirectoryStructure
+-#
+-# In most cases, administrators will remove this file from sites-enabled/ and
+-# leave it as reference inside of sites-available where it will continue to be
+-# updated by the nginx packaging team.
+-#
+-# This file will automatically load configuration files provided by other
+-# applications, such as Drupal or Wordpress. These applications will be made
+-# available underneath a path with that package name, such as /drupal8.
+-#
+-# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+-##
++server {
+ 
+-# Default server configuration
+-#
+-server {
+ 	listen 80 default_server;
+-	listen [::]:80 default_server;
+-
+-	# SSL configuration
+-	#
+-	# listen 443 ssl default_server;
+-	# listen [::]:443 ssl default_server;
+-	#
+-	# Note: You should disable gzip for SSL traffic.
+-	# See: https://bugs.debian.org/773332
+-	#
+-	# Read up on ssl_ciphers to ensure a secure configuration.
+-	# See: https://bugs.debian.org/765782
+-	#
+-	# Self signed certs generated by the ssl-cert package
+-	# Don't use them in a production server!
+-	#
+-	# include snippets/snakeoil.conf;
+-
+-	root /var/www/html;
+-
+-	# Add index.php to the list if you are using PHP
+-	index index.html index.htm index.nginx-debian.html;
+-
+ 	server_name _;
+ 
+-	location / {
+-		# First attempt to serve request as file, then
+-		# as directory, then fall back to displaying a 404.
+-		try_files $uri $uri/ =404;
+-	}
++	
++		location / {
++			proxy_pass http://localhost:8001;
++			proxy_set_header Host $http_host;
++		}
++		
+ 
+-	# pass PHP scripts to FastCGI server
+-	#
+-	#location ~ \.php$ {
+-	#	include snippets/fastcgi-php.conf;
+-	#
+-	#	# With php-fpm (or other unix sockets):
+-	#	fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+-	#	# With php-cgi (or other tcp sockets):
+-	#	fastcgi_pass 127.0.0.1:9000;
+-	#}
++		
+ 
+-	# deny access to .htaccess files, if Apache's document root
+-	# concurs with nginx's one
+-	#
+-	#location ~ /\.ht {
+-	#	deny all;
+-	#}
++
++		
++
++
++	
++
++	
++		location /mysql-metrics {
++
++			proxy_pass http://localhost:9104/metrics;
++		}
++	
++
++	
++		location /bind-metrics {
++
++			proxy_pass http://localhost:9119/metrics;
++		}
++	
++
++	
++		location /nginx-metrics {
++
++			proxy_pass http://localhost:9113/metrics;
++		}
++	
++
++	
++		location /node-metrics {
++
++			proxy_pass http://localhost:9100/metrics;
++		}
++	
++
++	
++
++			
++		location /keepalived-metrics {
++				
++			proxy_pass http://localhost:9165/metrics;
++		}
++	
++
++			
++		location /haproxy-metrics {
++				
++			proxy_pass http://localhost:9101/metrics;
++		}
++	
++		
+ }
+ 
+ 
+-# Virtual Host configuration for example.com
+-#
+-# You can move that to a different file under sites-available/ and symlink that
+-# to sites-enabled/ to enable it.
+-#
+-#server {
+-#	listen 80;
+-#	listen [::]:80;
+-#
+-#	server_name example.com;
+-#
+-#	root /var/www/example.com;
+-#	index index.html;
+-#
+-#	location / {
+-#		try_files $uri $uri/ =404;
+-#	}
+-#}
+
+changed: [sandr0o-1]
+--- before: /etc/nginx/sites-enabled/default
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpakq_dptq/default.j2
+@@ -1,91 +1,64 @@
+-##
+-# You should look at the following URL's in order to grasp a solid understanding
+-# of Nginx configuration files in order to fully unleash the power of Nginx.
+-# https://www.nginx.com/resources/wiki/start/
+-# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+-# https://wiki.debian.org/Nginx/DirectoryStructure
+-#
+-# In most cases, administrators will remove this file from sites-enabled/ and
+-# leave it as reference inside of sites-available where it will continue to be
+-# updated by the nginx packaging team.
+-#
+-# This file will automatically load configuration files provided by other
+-# applications, such as Drupal or Wordpress. These applications will be made
+-# available underneath a path with that package name, such as /drupal8.
+-#
+-# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+-##
++server {
+ 
+-# Default server configuration
+-#
+-server {
+ 	listen 80 default_server;
+-	listen [::]:80 default_server;
+-
+-	# SSL configuration
+-	#
+-	# listen 443 ssl default_server;
+-	# listen [::]:443 ssl default_server;
+-	#
+-	# Note: You should disable gzip for SSL traffic.
+-	# See: https://bugs.debian.org/773332
+-	#
+-	# Read up on ssl_ciphers to ensure a secure configuration.
+-	# See: https://bugs.debian.org/765782
+-	#
+-	# Self signed certs generated by the ssl-cert package
+-	# Don't use them in a production server!
+-	#
+-	# include snippets/snakeoil.conf;
+-
+-	root /var/www/html;
+-
+-	# Add index.php to the list if you are using PHP
+-	index index.html index.htm index.nginx-debian.html;
+-
+ 	server_name _;
+ 
+-	location / {
+-		# First attempt to serve request as file, then
+-		# as directory, then fall back to displaying a 404.
+-		try_files $uri $uri/ =404;
+-	}
++		
+ 
+-	# pass PHP scripts to FastCGI server
+-	#
+-	#location ~ \.php$ {
+-	#	include snippets/fastcgi-php.conf;
+-	#
+-	#	# With php-fpm (or other unix sockets):
+-	#	fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+-	#	# With php-cgi (or other tcp sockets):
+-	#	fastcgi_pass 127.0.0.1:9000;
+-	#}
++	
++		location /grafana {
++			proxy_pass http://localhost:3001;
++		}
++		
+ 
+-	# deny access to .htaccess files, if Apache's document root
+-	# concurs with nginx's one
+-	#
+-	#location ~ /\.ht {
+-	#	deny all;
+-	#}
++
++	
++		location /prometheus {
++			proxy_pass http://localhost:9090;
++		}
++		
++
++
++	
++		location /influxdb {
++			proxy_pass http://localhost:8086;
++		}
++	
++
++	
++
++	
++		location /bind-metrics {
++
++			proxy_pass http://localhost:9119/metrics;
++		}
++	
++
++	
++		location /nginx-metrics {
++
++			proxy_pass http://localhost:9113/metrics;
++		}
++	
++
++	
++		location /node-metrics {
++
++			proxy_pass http://localhost:9100/metrics;
++		}
++	
++
++			
++		location /influxdb-metrics {
++				
++			proxy_pass http://localhost:9424/metrics;
++		}
++	
++
++	
++
++	
++		
+ }
+ 
+ 
+-# Virtual Host configuration for example.com
+-#
+-# You can move that to a different file under sites-available/ and symlink that
+-# to sites-enabled/ to enable it.
+-#
+-#server {
+-#	listen 80;
+-#	listen [::]:80;
+-#
+-#	server_name example.com;
+-#
+-#	root /var/www/example.com;
+-#	index index.html;
+-#
+-#	location / {
+-#		try_files $uri $uri/ =404;
+-#	}
+-#}
+
+changed: [sandr0o-3]
+--- before: /etc/nginx/sites-enabled/default
++++ after: /home/sxarti/.ansible/tmp/ansible-local-38278lgylrffu/tmpn1762cxs/default.j2
+@@ -1,91 +1,67 @@
+-##
+-# You should look at the following URL's in order to grasp a solid understanding
+-# of Nginx configuration files in order to fully unleash the power of Nginx.
+-# https://www.nginx.com/resources/wiki/start/
+-# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+-# https://wiki.debian.org/Nginx/DirectoryStructure
+-#
+-# In most cases, administrators will remove this file from sites-enabled/ and
+-# leave it as reference inside of sites-available where it will continue to be
+-# updated by the nginx packaging team.
+-#
+-# This file will automatically load configuration files provided by other
+-# applications, such as Drupal or Wordpress. These applications will be made
+-# available underneath a path with that package name, such as /drupal8.
+-#
+-# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+-##
++server {
+ 
+-# Default server configuration
+-#
+-server {
+ 	listen 80 default_server;
+-	listen [::]:80 default_server;
+-
+-	# SSL configuration
+-	#
+-	# listen 443 ssl default_server;
+-	# listen [::]:443 ssl default_server;
+-	#
+-	# Note: You should disable gzip for SSL traffic.
+-	# See: https://bugs.debian.org/773332
+-	#
+-	# Read up on ssl_ciphers to ensure a secure configuration.
+-	# See: https://bugs.debian.org/765782
+-	#
+-	# Self signed certs generated by the ssl-cert package
+-	# Don't use them in a production server!
+-	#
+-	# include snippets/snakeoil.conf;
+-
+-	root /var/www/html;
+-
+-	# Add index.php to the list if you are using PHP
+-	index index.html index.htm index.nginx-debian.html;
+-
+ 	server_name _;
+ 
+-	location / {
+-		# First attempt to serve request as file, then
+-		# as directory, then fall back to displaying a 404.
+-		try_files $uri $uri/ =404;
+-	}
++	
++		location / {
++			proxy_pass http://localhost:8001;
++			proxy_set_header Host $http_host;
++		}
++		
+ 
+-	# pass PHP scripts to FastCGI server
+-	#
+-	#location ~ \.php$ {
+-	#	include snippets/fastcgi-php.conf;
+-	#
+-	#	# With php-fpm (or other unix sockets):
+-	#	fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+-	#	# With php-cgi (or other tcp sockets):
+-	#	fastcgi_pass 127.0.0.1:9000;
+-	#}
++		
+ 
+-	# deny access to .htaccess files, if Apache's document root
+-	# concurs with nginx's one
+-	#
+-	#location ~ /\.ht {
+-	#	deny all;
+-	#}
++
++		
++
++
++	
++
++	
++		location /mysql-metrics {
++
++			proxy_pass http://localhost:9104/metrics;
++		}
++	
++
++	
++		location /bind-metrics {
++
++			proxy_pass http://localhost:9119/metrics;
++		}
++	
++
++	
++		location /nginx-metrics {
++
++			proxy_pass http://localhost:9113/metrics;
++		}
++	
++
++	
++		location /node-metrics {
++
++			proxy_pass http://localhost:9100/metrics;
++		}
++	
++
++	
++
++			
++		location /keepalived-metrics {
++				
++			proxy_pass http://localhost:9165/metrics;
++		}
++	
++
++			
++		location /haproxy-metrics {
++				
++			proxy_pass http://localhost:9101/metrics;
++		}
++	
++		
+ }
+ 
+ 
+-# Virtual Host configuration for example.com
+-#
+-# You can move that to a different file under sites-available/ and symlink that
+-# to sites-enabled/ to enable it.
+-#
+-#server {
+-#	listen 80;
+-#	listen [::]:80;
+-#
+-#	server_name example.com;
+-#
+-#	root /var/www/example.com;
+-#	index index.html;
+-#
+-#	location / {
+-#		try_files $uri $uri/ =404;
+-#	}
+-#}
+
+changed: [sandr0o-2]
+
+TASK [nginx : Copy index.html to server] ***************************************
+--- before
++++ after: /home/sxarti/Documents/ica0002/roles/nginx/files/index.html
+@@ -0,0 +1,11 @@
++<html>
++  <head>
++    <title>Welcome to ansible</title>
++  </head>
++  <body>
++  <h1>nginx, configured by Ansible</h1>
++  <p>If you can see this, Ansible successfully installed nginx.</p>
++
++  <p>Running on {{ inventory_hostname }}</p>
++  </body>
++</html>
+
+changed: [sandr0o-1]
+--- before
++++ after: /home/sxarti/Documents/ica0002/roles/nginx/files/index.html
+@@ -0,0 +1,11 @@
++<html>
++  <head>
++    <title>Welcome to ansible</title>
++  </head>
++  <body>
++  <h1>nginx, configured by Ansible</h1>
++  <p>If you can see this, Ansible successfully installed nginx.</p>
++
++  <p>Running on {{ inventory_hostname }}</p>
++  </body>
++</html>
+
+changed: [sandr0o-3]
+--- before
++++ after: /home/sxarti/Documents/ica0002/roles/nginx/files/index.html
+@@ -0,0 +1,11 @@
++<html>
++  <head>
++    <title>Welcome to ansible</title>
++  </head>
++  <body>
++  <h1>nginx, configured by Ansible</h1>
++  <p>If you can see this, Ansible successfully installed nginx.</p>
++
++  <p>Running on {{ inventory_hostname }}</p>
++  </body>
++</html>
+
+changed: [sandr0o-2]
+
+TASK [nginx : Ensure nginx service is started unconditionally] *****************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+RUNNING HANDLER [nginx : Restart nginx] ****************************************
+changed: [sandr0o-3]
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+
+RUNNING HANDLER [nginx : Reload nginx] *****************************************
+changed: [sandr0o-1]
+changed: [sandr0o-3]
+changed: [sandr0o-2]
+
+PLAY [Agama web server] ********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [agama : Create /opt/agama for docker container] **************************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/opt/agama",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-2]
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/opt/agama",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [sandr0o-1]
+
+TASK [agama : Download agama for docker container] *****************************
+changed: [sandr0o-1]
+changed: [sandr0o-2]
+
+TASK [agama : Build agama.iso on docker] ***************************************
+changed: [sandr0o-2]
+changed: [sandr0o-1]
+
+PLAY RECAP *********************************************************************
+sandr0o-1                  : ok=60   changed=40   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+sandr0o-2                  : ok=60   changed=40   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+sandr0o-3                  : ok=43   changed=27   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+# Second Run
 Thu 13 Jan 2022 02:59:05 PM EET
 + hostname
 sandro
@@ -318,11 +2072,11 @@ ok: [sandr0o-1]
 ok: [sandr0o-2]
 
 TASK [agama : Build agama.iso on docker] ***************************************
-fatal: [sandr0o-1]: FAILED! => {"changed": false, "msg": "Error building agama - code: None, message: toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit, logs: ['Step 1/7 : FROM ubuntu:focal', '']"}
-fatal: [sandr0o-2]: FAILED! => {"changed": false, "msg": "Error building agama - code: None, message: toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit, logs: ['Step 1/7 : FROM ubuntu:focal', '']"}
+ok: [sandr0o-1] 
+ok: [sandr0o-2]
 
 PLAY RECAP *********************************************************************
-sandr0o-1                  : ok=51   changed=0    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
-sandr0o-2                  : ok=51   changed=0    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
+sandr0o-1                  : ok=51   changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+sandr0o-2                  : ok=51   changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
 sandr0o-3                  : ok=37   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
