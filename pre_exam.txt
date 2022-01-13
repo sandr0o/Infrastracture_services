@@ -1,18 +1,328 @@
-#!/bin/bash -ex
+Thu 13 Jan 2022 02:59:05 PM EET
++ hostname
+sandro
++ ansible-playbook infra.yaml --diff
+[WARNING]: Invalid characters were found in group names but not replaced, use
+-vvvv to see details
 
-date > pre_exam.txt
+PLAY [Collect info about all VMs] **********************************************
+[WARNING]: While constructing a mapping from
+/home/sxarti/Documents/ica0002/group_vars/all.yaml, line 1, column 1, found a
+duplicate dict key (keepalived_interface). Using last defined value only.
+[WARNING]: While constructing a mapping from
+/home/sxarti/Documents/ica0002/group_vars/all.yaml, line 1, column 1, found a
+duplicate dict key (keepalived_virtual_id). Using last defined value only.
 
-exec > >(tee -ia pre_exam.txt) 2>&1
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
 
-hostname
+TASK [setup] *******************************************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
 
-ansible-playbook infra.yaml --diff
+PLAY [Init] ********************************************************************
 
-ansible-playbook infra.yaml --diff
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+ok: [sandr0o-2]
 
-ansible all -b -m reboot -a "test_command=uptime"
+TASK [init : Update APT cache] *************************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
 
-ansible-playbook infra.yaml --diff
+PLAY [Backup] ******************************************************************
 
-date
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+
+TASK [backup : Create directories for backup&restore] **************************
+ok: [sandr0o-2] => (item=backup)
+ok: [sandr0o-3] => (item=backup)
+ok: [sandr0o-1] => (item=backup)
+ok: [sandr0o-3] => (item=restore)
+ok: [sandr0o-2] => (item=restore)
+ok: [sandr0o-1] => (item=restore)
+
+TASK [backup : Create user for backup] *****************************************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [backup : Install duplicity] **********************************************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [backup : Template backup-server-ssh-key to known hosts] ******************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+PLAY [IPtables] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [iptables : Install iptables-persistent] **********************************
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+
+TASK [iptables : fix ssl handshake docker] *************************************
+ok: [sandr0o-2]
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+
+TASK [iptables : Sleep for 10 seconds and continue with play] ******************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [iptables : Check if  iptables-persistent (netfilter-persistent) is started and if it is not, start it] ***
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [iptables : load iptable-mangle config] ***********************************
+[WARNING]: Attempts to restore iptables state without rollback in case of
+mistake may lead the ansible controller to loose access to the hosts and never
+regain it before fixing firewall rules through a serial console, or any other
+way except SSH. Please set task attribute 'poll' (=15) to 0, and 'async' (=0)
+to a value >2 and not greater than 'ansible_timeout' (=10) (recommended).
+[WARNING]: Attempts to restore iptables state without rollback in case of
+mistake may lead the ansible controller to loose access to the hosts and never
+regain it before fixing firewall rules through a serial console, or any other
+way except SSH. Please set task attribute 'poll' (=15) to 0, and 'async' (=0)
+to a value >2 and not greater than 'ansible_timeout' (=10) (recommended).
+[WARNING]: Attempts to restore iptables state without rollback in case of
+mistake may lead the ansible controller to loose access to the hosts and never
+regain it before fixing firewall rules through a serial console, or any other
+way except SSH. Please set task attribute 'poll' (=15) to 0, and 'async' (=0)
+to a value >2 and not greater than 'ansible_timeout' (=10) (recommended).
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+PLAY [Bind9 DNS server] ********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [bind : Install 'bind9'] **************************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [bind : Install 'python3-dnspython'] **************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [bind : Ensure directory /var/cache/bind is created] **********************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [bind : Upload db.luntik.sc to /var/cache/bind/] **************************
+skipping: [sandr0o-1]
+skipping: [sandr0o-2]
+ok: [sandr0o-3]
+
+TASK [bind : Upload db.luntik.sc.reverse.j2 to /var/cache/bind/] ***************
+skipping: [sandr0o-1]
+skipping: [sandr0o-2]
+ok: [sandr0o-3]
+
+TASK [bind : Template resolv.conf.j2 to /etc/resolv.conf & update resolve.conf.j2 to /run/systemd/resolve/] ***
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [bind : Stop service systemd-resolved] ************************************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [bind : Upload named.conf.local.j2 to /etc/bind/named.conf.local / local DNS server configuration] ***
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [bind : Upload named.conf.options.j2 to /etc/bind/] ***********************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [bind : Execute handlers preemptively] ************************************
+
+TASK [bind : Ensure bind9 is started] ******************************************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [bind : Set A records] ****************************************************
+ok: [sandr0o-3] => (item={'key': 'backup', 'value': '192.168.42.132'})
+ok: [sandr0o-3] => (item={'key': 'cloudfare', 'value': '1.1.1.1'})
+ok: [sandr0o-3] => (item={'key': 'google', 'value': '8.8.8.8'})
+ok: [sandr0o-3] => (item={'key': 'google2', 'value': '8.8.4.4'})
+
+TASK [bind : Set CNAME records] ************************************************
+ok: [sandr0o-3] => (item={'key': 'grafana', 'value': 'sandr0o-3'})
+ok: [sandr0o-3] => (item={'key': 'prometheus', 'value': 'sandr0o-3'})
+ok: [sandr0o-3] => (item={'key': 'influxdb', 'value': 'sandr0o-3'})
+ok: [sandr0o-3] => (item={'key': 'web1', 'value': 'sandr0o-1'})
+ok: [sandr0o-3] => (item={'key': 'web2', 'value': 'sandr0o-2'})
+ok: [sandr0o-3] => (item={'key': 'web3', 'value': 'sandr0o-3'})
+ok: [sandr0o-3] => (item={'key': 'lb1', 'value': 'sandr0o-1'})
+ok: [sandr0o-3] => (item={'key': 'lb2', 'value': 'sandr0o-2'})
+ok: [sandr0o-3] => (item={'key': 'mysql1', 'value': 'sandr0o-1'})
+ok: [sandr0o-3] => (item={'key': 'mysql2', 'value': 'sandr0o-2'})
+ok: [sandr0o-3] => (item={'key': 'ns1', 'value': 'sandr0o-3'})
+ok: [sandr0o-3] => (item={'key': 'ns2', 'value': 'sandr0o-1'})
+ok: [sandr0o-3] => (item={'key': 'ns3', 'value': 'sandr0o-2'})
+
+TASK [bind : Ensure bind9 is started] ******************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+PLAY [MySQL database server] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : Install mysql-server] ********************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : Install PyMySQL] *************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : Sleep for 10 seconds and continue with play] *********************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : Template /etc/mysql/mysql.conf.d/override.cnf with override.cnf.j2] ***
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : MySQL database] **************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : MySQL user] ******************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : Create user exporter] ********************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : Create MySQL replication user] ***********************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [mysql : Ensure mysql is started] *****************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql : Set read only parameter] *****************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql_backup : Ensure /home/backup/mysql directory is created] ***********
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql_backup : Grant privileges for user backup] *************************
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [mysql_backup : Template mysql configuration file] ************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [mysql_backup : Template cron file] ***************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+PLAY [Docker] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+ok: [sandr0o-3]
+
+TASK [docker : Install docker.io and python3-docker] ***************************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [docker : Ensure docker is running] ***************************************
+ok: [sandr0o-3]
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+PLAY [Nginx] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+
+TASK [nginx : Install nginx] ***************************************************
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+ok: [sandr0o-1]
+
+TASK [nginx : Replace vm /etc/nginx/sites-enabled/default with nginx configuration as uWSGI frontend] ***
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+ok: [sandr0o-3]
+
+TASK [nginx : Copy index.html to server] ***************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+ok: [sandr0o-3]
+
+TASK [nginx : Ensure nginx service is started unconditionally] *****************
+ok: [sandr0o-1]
+ok: [sandr0o-3]
+ok: [sandr0o-2]
+
+PLAY [Agama web server] ********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [agama : Create /opt/agama for docker container] **************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [agama : Download agama for docker container] *****************************
+ok: [sandr0o-1]
+ok: [sandr0o-2]
+
+TASK [agama : Build agama.iso on docker] ***************************************
+fatal: [sandr0o-1]: FAILED! => {"changed": false, "msg": "Error building agama - code: None, message: toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit, logs: ['Step 1/7 : FROM ubuntu:focal', '']"}
+fatal: [sandr0o-2]: FAILED! => {"changed": false, "msg": "Error building agama - code: None, message: toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit, logs: ['Step 1/7 : FROM ubuntu:focal', '']"}
+
+PLAY RECAP *********************************************************************
+sandr0o-1                  : ok=51   changed=0    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
+sandr0o-2                  : ok=51   changed=0    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
+sandr0o-3                  : ok=37   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 

@@ -1,6 +1,6 @@
-sandr0o-1 ansible_host=193.40.156.67 ansible_port=12922 ansible_ssh_user=ubuntu
-sandr0o-2 ansible_host=193.40.156.67 ansible_port=13922 ansible_ssh_user=ubuntu
-sandr0o-3 ansible_host=193.40.156.67 ansible_port=19522 ansible_ssh_user=ubuntu
+sandr0o-1 ansible_host=193.40.156.67 ansible_port=11222 ansible_ssh_user=ubuntu
+sandr0o-2 ansible_host=193.40.156.67 ansible_port=5322 ansible_ssh_user=ubuntu
+sandr0o-3 ansible_host=193.40.156.67 ansible_port=14422 ansible_ssh_user=ubuntu
 
 [vm1]
 sandr0o-1

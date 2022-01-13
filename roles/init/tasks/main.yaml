@@ -2,6 +2,3 @@
   ansible.builtin.apt:
     cache_valid_time: 86400
 
-- name: hostname
-  hostname: 
-    name: "{{ inventory_hostname }}"
