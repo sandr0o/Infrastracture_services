@@ -3,6 +3,12 @@
     name:
       - python3-docker
       - docker.io
+      
+- name: log into docker
+  community.docker.docker_login:
+    username: '{{ docker_user }}'
+    password: '{{ docker_pass }}'
+  no_log: True
 
 - name: Ensure docker is running
   service:
