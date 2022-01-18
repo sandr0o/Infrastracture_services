@@ -14,14 +14,21 @@
   ansible.builtin.template:
     src: override.cnf.j2
     dest: /etc/mysql/mysql.conf.d/override.cnf
+  no_log: true
   notify: 
    - Restart mysql
+
+- name: Ensure mysql is started
+  service:
+    name: mysql
+    state: started
+    enabled: yes
 
 - name: MySQL database
   community.mysql.mysql_db:
     name: "{{ mysql_database }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  no_log: true
+  #no_log: true
 
 - name: MySQL user
   community.mysql.mysql_user:
@@ -32,7 +39,6 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
-
 - name: Create user exporter
   community.mysql.mysql_user:
     name: "{{ mysql_exporter_user }}"
@@ -42,7 +48,6 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock 
   no_log: true
 
- 
 - name: Create MySQL replication user
   mysql_user:
     name: "{{ replication_user }}"
@@ -67,3 +72,11 @@
   notify:
     - Reset MySQL source
     - Reset MySQL replica
+
+- name: Ensure mysql is started
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+  notify:
+    - Restart mysql

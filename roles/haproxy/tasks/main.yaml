@@ -14,6 +14,7 @@
   service:
     name: haproxy
     state: started
+    enabled: yes
 
 - name: Install 'prometheus-haproxy-exporter'
   apt:

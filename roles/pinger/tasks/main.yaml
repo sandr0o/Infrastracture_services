@@ -32,8 +32,8 @@
     - Restart fping
     - Reload systemctl daemon
 
-# - name: Ensure pinger is running
-#   service:
-#     name: pinger
-#     state: started
-#     enabled: true
+-  name: Ensure pinger is running
+   service:
+     name: pinger
+     state: started
+     enabled: true

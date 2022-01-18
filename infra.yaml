@@ -37,6 +37,8 @@
   roles:
     - mysql
     - mysql_backup
+  tags:
+    - MYSQL
 
 - name: Docker
   hosts: docker
@@ -75,6 +77,8 @@
   become: yes
   roles:
     - pinger
+  tags:
+    - PINGER
 
 - name: Rsyslog
   hosts: rsyslog
@@ -87,6 +91,8 @@
   become: yes
   roles:
     - haproxy
+  tags:
+    - HAPROXY
 
 - name: Keepalived
   hosts: keepalived

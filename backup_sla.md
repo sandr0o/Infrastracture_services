@@ -44,9 +44,9 @@ There are some services which although mission-critical, do not require any data
 
 ## Backup Recovery Point Objective (RPO)
 
-Acceptable time window of customer data loss is 24 hours.
+Acceptable time window of customer data loss is from monday to saturday.
 
-In case of the other data source (Manually configured Grafana) - acceptable time window grows considerably, as it does not see changes nearly as often as customer data, neither is it absolutely necessary for the operation of infrastructure. RPO for non mission-critical data - one full week or seven (7) days
+In case of the other data source (Manually configured Grafana) - acceptable time window grows considerably, as it does not see changes nearly as often as customer data, neither is it absolutely necessary for the operation of infrastructure.
 
 ## Versioning and retention
 
