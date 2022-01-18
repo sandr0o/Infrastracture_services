@@ -51,14 +51,11 @@ In case of the other data source (Manually configured Grafana) - acceptable time
 ## Versioning and retention
 
 ### Customer data
-Will see a full backup once a week - every Thursday, 23:30 EEST, while incremental backups will happen every day at 23:30 EEST
-
-Full backups will be stored for three (3) weeks, while only last seven (7) incremental backups will be retained.
-
+Will see a full backup once a week - every Saturday, 23:30 EEST, while incremental backups will happen every day at 23:30 EEST
 In conclusion - Ten versions of data will be available, with better tuning available for the more recent data
 
 ### Grafana
-Grafana config backups will be made every week at the same time as customer data backups - Thursday 23:30 EEST - each backup will be retained for two (2) weeks, leaving us with two versions of Grafana configuration
+Grafana config backups will be made from monday to friday at the same time as customer data backups - Thursday 23:30 EEST - each backup will be retained for two (2) weeks, leaving us with two versions of Grafana configuration
 
 ### Ansible repository
 As the repository is powered by git, every version of the repository is going to be available with no (For the lifetime of the infrastructure) time constraint for storage
